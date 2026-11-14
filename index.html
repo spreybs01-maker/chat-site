@@ -2,173 +2,180 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#090817">
-<title>ZADNEPROVSKII — Your digital universe</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<title>ZADNEPROVSKII — Universe</title>
 <style>
-:root{--ink:#101014;--muted:#777780;--line:#e9e9ed;--paper:#fff;--night:#080817;--violet:#8a6cff;--lav:#c3b5ff;--max:1180px}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:#fff}a{color:inherit;text-decoration:none}button{font:inherit}
-.wrap{width:min(var(--max),calc(100% - 64px));margin:auto}
-.galaxy{position:relative;overflow:hidden;color:#fff;background:radial-gradient(ellipse at 52% 40%,rgba(78,39,135,.72),transparent 44%),radial-gradient(ellipse at 22% 25%,rgba(50,30,104,.58),transparent 38%),radial-gradient(ellipse at 78% 65%,rgba(32,30,91,.5),transparent 36%),linear-gradient(135deg,#080713,#100b27 52%,#050611)}
-.galaxy:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.55;background-image:radial-gradient(1px 1px at 8% 18%,#fff 98%,transparent),radial-gradient(1px 1px at 22% 72%,#d9ceff 98%,transparent),radial-gradient(1.5px 1.5px at 67% 21%,#fff 98%,transparent),radial-gradient(1px 1px at 88% 43%,#fff 98%,transparent),radial-gradient(1px 1px at 46% 88%,#cfc4ff 98%,transparent),radial-gradient(1px 1px at 75% 82%,#fff 98%,transparent),radial-gradient(1px 1px at 34% 31%,#fff 98%,transparent);background-size:310px 260px,390px 310px,270px 300px,360px 330px,290px 340px,400px 280px,330px 350px}
-.galaxy:after{content:"";position:absolute;inset:-15%;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,transparent 25%,rgba(3,3,12,.36) 78%);mix-blend-mode:multiply}
-.galaxy-inner{position:relative;z-index:1}
-.hero{min-height:760px;height:min(900px,100svh);display:flex;flex-direction:column}
-.nav{height:82px;display:flex;align-items:center;justify-content:space-between}
-.logo{font-size:13px;letter-spacing:.19em;font-weight:800}
-.nav-right{display:flex;align-items:center;gap:14px}
-.lang{display:flex;gap:4px;border:1px solid rgba(255,255,255,.3);border-radius:30px;padding:5px 8px}
-.lang button{border:0;background:none;color:rgba(255,255,255,.58);font-size:12px;cursor:pointer;padding:2px 4px}
-.lang button.active{color:#fff;font-weight:700}
-.nav-link{font-size:13px;color:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.25);border-radius:30px;padding:10px 17px}
-.hero-center{flex:1;display:flex;align-items:center;justify-content:center;text-align:center;padding:40px 0 80px;position:relative}
-.hero-copy{max-width:850px;position:relative;z-index:3}
-.kicker{font-size:10px;letter-spacing:.27em;text-transform:uppercase;color:#c8b9ff;font-weight:700;margin-bottom:26px}
-h1{font-size:clamp(48px,7vw,88px);line-height:.99;letter-spacing:-.065em;margin:0 auto 26px;font-weight:760}
-.hero-desc{font-size:clamp(16px,2vw,20px);line-height:1.65;color:rgba(255,255,255,.72);max-width:620px;margin:0 auto 34px}
-.actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:40px;padding:15px 25px;font-size:14px;font-weight:650;transition:.2s;cursor:pointer}
-.btn-light{background:#fff;color:#111;border:1px solid #fff}.btn-light:hover{background:#eae4ff}
-.btn-ghost{border:1px solid rgba(255,255,255,.34);color:#fff;background:rgba(255,255,255,.06)}.btn-ghost:hover{background:rgba(255,255,255,.14)}
-.constellation{position:absolute;inset:0;width:100%;height:100%;z-index:1;opacity:.8;pointer-events:none}
-.scroll-hint{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);font-size:11px;letter-spacing:.13em;color:rgba(255,255,255,.58);text-transform:uppercase;display:grid;gap:9px;justify-items:center}
-.scroll-hint span:last-child{font-size:20px}
-.white-section{background:#fff;color:var(--ink);padding:120px 0}
-.section-kicker{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#8a7bca;font-weight:750;margin-bottom:18px}
-.section-title{font-size:clamp(36px,5vw,60px);line-height:1.04;letter-spacing:-.055em;margin:0 0 22px;max-width:760px}
-.section-lead{font-size:17px;line-height:1.7;color:#73737b;max-width:650px;margin:0}
-.split{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
-.visual-card{min-height:370px;border-radius:20px;background:linear-gradient(145deg,#f5f3fb,#fafafa);border:1px solid #eeeaf8;position:relative;overflow:hidden;padding:30px;display:flex;align-items:center;justify-content:center}
-.mock-window{width:100%;max-width:440px;background:#fff;border:1px solid #e8e6ef;border-radius:14px;box-shadow:0 22px 65px rgba(29,20,66,.09);padding:18px}
-.mock-top{display:flex;gap:6px;border-bottom:1px solid #eee;padding-bottom:14px;margin-bottom:15px}.dot{width:7px;height:7px;border-radius:50%;background:#ddd}
-.mock-row{display:flex;align-items:center;gap:11px;padding:10px 0;border-bottom:1px solid #f2f1f4}.mock-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#bcaaff,#e6e0ff)}.mock-line{height:7px;border-radius:9px;background:#eceaf1}.mock-line.long{width:58%}.mock-line.short{width:32%;margin-top:7px}
-.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:58px}
-.feature{border:1px solid #ececf0;border-radius:16px;padding:25px;min-height:190px;background:#fff}
-.feature-icon{width:38px;height:38px;border-radius:11px;background:#f1edff;color:#6d56d9;display:grid;place-items:center;font-size:17px;margin-bottom:24px}
-.feature h3{font-size:17px;margin:0 0 9px;letter-spacing:-.02em}.feature p{font-size:14px;line-height:1.6;color:#777780;margin:0}
-.gallery-band{padding:105px 0 115px}
-.gallery-head{text-align:center;max-width:720px;margin:0 auto 48px}
-.gallery-head .section-title{margin-left:auto;margin-right:auto}
-.gallery-head .section-lead{margin:auto}
-.gallery-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}
-.gallery-tile{min-height:310px;border-radius:18px;overflow:hidden;position:relative;background:linear-gradient(140deg,#17102f,#3a2266 55%,#090817);border:1px solid rgba(255,255,255,.12);padding:28px;display:flex;align-items:flex-end}
-.gallery-tile:nth-child(2){background:linear-gradient(145deg,#111326,#27214a 60%,#0b0b18)}
-.gallery-tile:before{content:"";position:absolute;inset:0;background-image:radial-gradient(1px 1px at 20% 22%,#fff 98%,transparent),radial-gradient(1.5px 1.5px at 73% 31%,#fff 98%,transparent),radial-gradient(1px 1px at 55% 72%,#d7caff 98%,transparent),radial-gradient(1px 1px at 85% 82%,#fff 98%,transparent);background-size:180px 160px,230px 190px,210px 200px,170px 210px;opacity:.65}
-.tile-content{position:relative;z-index:1;color:white}.tile-content small{color:#c5b8ff;letter-spacing:.16em;text-transform:uppercase;font-size:9px}.tile-content h3{font-size:26px;letter-spacing:-.04em;margin:10px 0 0}
-.final-cta{padding:105px 0;text-align:center}
-.final-cta h2{font-size:clamp(38px,5vw,64px);letter-spacing:-.06em;line-height:1.02;margin:0 auto 20px;max-width:750px}
-.final-cta p{color:rgba(255,255,255,.68);font-size:16px;line-height:1.65;margin:0 auto 30px;max-width:560px}
-footer{background:#080817;color:rgba(255,255,255,.55);padding:28px 0;font-size:11px;letter-spacing:.04em}
-.footer-inner{display:flex;justify-content:space-between;align-items:center;gap:20px}
-@media(max-width:760px){.wrap{width:min(100% - 36px,var(--max))}.hero{min-height:680px;height:92svh}.nav{height:70px}.nav-link{display:none}h1{font-size:clamp(43px,12vw,66px)}.white-section{padding:78px 0}.split{grid-template-columns:1fr;gap:35px}.visual-card{min-height:280px}.feature-grid{grid-template-columns:1fr;gap:11px;margin-top:35px}.feature{min-height:auto}.gallery-band{padding:78px 0}.gallery-grid{grid-template-columns:1fr}.gallery-tile{min-height:240px}.footer-inner{flex-direction:column;align-items:flex-start}}
+:root{--white:#fff;--ink:#111116;--muted:#777780;--line:#e8e8ed;--violet:#8060d8;--violet-soft:#f2edff;--night:#090817;--side:244px;--right:270px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#fff;color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,a{font:inherit}a{color:inherit;text-decoration:none}button{cursor:pointer}
+.layout{min-height:100vh;display:grid;grid-template-columns:var(--side) minmax(0,1fr) var(--right)}
+.sidebar,.rightbar{background:#fff;position:sticky;top:0;height:100vh;overflow:auto;z-index:5}
+.sidebar{border-right:1px solid var(--line);padding:27px 20px 20px;display:flex;flex-direction:column}
+.rightbar{border-left:1px solid var(--line);padding:27px 22px}
+.brand{display:flex;align-items:center;gap:12px;padding:0 7px 45px}
+.brand-mark{width:39px;height:39px;border-radius:13px;background:radial-gradient(circle at 35% 30%,#b8a0ff,#5832b4 60%,#1b1236);box-shadow:0 5px 18px #6b4acb35}
+.brand-name{font-size:12px;font-weight:850;letter-spacing:.16em}
+.brand-sub{font-size:9px;color:#888;letter-spacing:.07em;margin-top:4px}
+.nav-label{font-size:9px;color:#999;letter-spacing:.2em;font-weight:750;padding:0 10px 12px;margin-top:5px}
+.nav{display:grid;gap:5px}
+.nav a{display:flex;align-items:center;gap:13px;padding:12px 12px;border-radius:11px;color:#55545d;font-size:13px;font-weight:570;transition:background .15s,color .15s}
+.nav a:hover{background:#f7f6fa;color:#111}
+.nav a.active{background:#f2eff9;color:#18131f}
+.nav svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.nav-sep{height:1px;background:var(--line);margin:17px 5px}
+.account{margin-top:auto;border-top:1px solid var(--line);padding:19px 5px 0;display:flex;align-items:center;gap:11px}
+.account-avatar{width:35px;height:35px;border-radius:50%;background:radial-gradient(circle at 35% 25%,#d9ccff,#7654c9 70%);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:700}
+.account b{font-size:12px}.account small{display:block;color:#888;font-size:10px;margin-top:3px}
+.center{min-width:0;overflow:hidden}
+.topbar{height:76px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(24px,4vw,54px);border-bottom:1px solid #f0f0f2;background:#fff}
+.breadcrumb{font-size:12px;color:#8a8a92}.breadcrumb b{color:#222;margin-left:6px}
+.top-actions{display:flex;align-items:center;gap:10px}
+.round-btn,.language{height:38px;border:1px solid #e8e8ec;background:#fff;border-radius:30px;color:#333;display:flex;align-items:center;justify-content:center}
+.round-btn{width:38px;font-size:15px}.language{padding:0 13px;font-size:12px}
+.content-section{padding:54px clamp(24px,4vw,54px);background:#fff}
+.hero-section{min-height:650px;position:relative;overflow:hidden;padding-top:44px}
+.eyebrow{font-size:10px;letter-spacing:.25em;font-weight:800;color:#777;margin-bottom:17px}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:20px;align-items:center;position:relative;z-index:1}
+h1{font-size:clamp(42px,5.2vw,66px);letter-spacing:-.065em;line-height:.99;margin:0 0 19px;font-weight:760;max-width:690px}
+.hero-copy p{font-size:16px;line-height:1.65;color:#73737b;max-width:580px;margin:0 0 25px}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn{border-radius:30px;padding:13px 20px;font-size:12px;font-weight:650;display:inline-flex;align-items:center;justify-content:center}
+.btn-dark{background:#111;color:#fff;border:1px solid #111}.btn-outline{border:1px solid #d8d8df;color:#222;background:#fff}
+.hero-art{height:310px;position:relative;display:grid;place-items:center}
+.mountain{width:100%;max-width:460px;height:290px;position:relative;overflow:hidden}
+.mountain svg{width:100%;height:100%}
+.stats{display:flex;gap:10px;margin-top:42px;flex-wrap:wrap}
+.stat{border:1px solid #e9e9ed;border-radius:13px;padding:13px 17px;min-width:112px}
+.stat small{display:block;color:#888;font-size:10px;margin-bottom:7px}.stat b{font-size:23px;font-weight:650}
+.module-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:40px}
+.module{border:1px solid #e8e8ed;border-radius:15px;padding:17px 16px 15px;min-height:124px;background:#fff;transition:border-color .15s,transform .15s}
+.module:hover{border-color:#c9bde9;transform:translateY(-2px)}
+.module-icon{width:25px;height:25px;color:#28242e;margin-bottom:13px}
+.module-icon svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.module b{display:block;font-size:13px;margin-bottom:5px}.module small{font-size:10px;color:#85858d}
+.section-heading{max-width:650px;margin-bottom:28px}
+.section-heading h2{font-size:clamp(32px,4vw,48px);letter-spacing:-.055em;line-height:1.05;margin:0 0 13px}
+.section-heading p{font-size:15px;color:#777780;line-height:1.65;margin:0}
+.galaxy-section{background:radial-gradient(ellipse at 70% 48%,rgba(87,49,151,.62),transparent 42%),radial-gradient(ellipse at 20% 15%,rgba(50,32,111,.58),transparent 40%),linear-gradient(125deg,#080713,#100b25 55%,#070713);color:#fff;min-height:570px;position:relative;overflow:hidden;padding-top:70px;padding-bottom:70px}
+.galaxy-section:before{content:"";position:absolute;inset:0;opacity:.48;pointer-events:none;background-image:radial-gradient(1px 1px at 8% 18%,#fff 98%,transparent),radial-gradient(1px 1px at 22% 72%,#d9ceff 98%,transparent),radial-gradient(1.5px 1.5px at 67% 21%,#fff 98%,transparent),radial-gradient(1px 1px at 88% 43%,#fff 98%,transparent),radial-gradient(1px 1px at 46% 88%,#cfc4ff 98%,transparent);background-size:310px 260px,390px 310px,270px 300px,360px 330px,290px 340px}
+.galaxy-content{position:relative;z-index:1;display:grid;grid-template-columns:.85fr 1.15fr;gap:22px;align-items:center}
+.galaxy-section .eyebrow{color:#c9b8ff}.galaxy-section h2{font-size:clamp(36px,4.5vw,56px);line-height:1.02;letter-spacing:-.06em;margin:0 0 17px}
+.galaxy-section p{color:rgba(255,255,255,.7);font-size:15px;line-height:1.7;max-width:430px;margin:0 0 25px}
+.galaxy-map{width:100%;height:340px}
+.galaxy-map svg{width:100%;height:100%}
+.galaxy-map .links{stroke:#bda7ff;stroke-width:1.1;opacity:.52;fill:none}
+.galaxy-map .stars{fill:#f3edff}
+.galaxy-map .glow{fill:#a989ff;opacity:.18}
+.white-section{background:#fff;padding-top:75px;padding-bottom:85px}
+.feature-layout{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center}
+.photo-placeholder{height:330px;border-radius:19px;overflow:hidden;background:linear-gradient(145deg,#e9e9ed,#f7f7f8 45%,#c9cbd3);position:relative}
+.photo-placeholder:before{content:"";position:absolute;inset:0;background:linear-gradient(155deg,transparent 30%,rgba(255,255,255,.55)),radial-gradient(ellipse at 70% 30%,#fff 0,transparent 32%),linear-gradient(130deg,#cfd2d9,#f5f5f6 50%,#bfc3cc)}
+.photo-placeholder:after{content:"";position:absolute;width:50%;height:90%;right:8%;bottom:-24%;background:linear-gradient(145deg,#aeb3be,#f1f2f4 45%,#8e95a2);clip-path:polygon(50% 0,100% 100%,0 100%);filter:drop-shadow(0 0 15px #fff)}
+.feature-list{display:grid;gap:14px;margin-top:27px}
+.feature-line{display:flex;gap:13px;align-items:flex-start}.feature-line i{width:28px;height:28px;border-radius:9px;background:#f1edfb;color:#7052c0;display:grid;place-items:center;font-style:normal;flex:none}.feature-line b{font-size:13px;display:block;margin:1px 0 4px}.feature-line small{color:#81818a;font-size:11px;line-height:1.5}
+.right-status{display:flex;align-items:center;gap:9px;font-size:11px;color:#555;margin-bottom:39px}.green-dot{width:7px;height:7px;background:#31c48d;border-radius:50%}
+.right-block{border-bottom:1px solid var(--line);padding-bottom:23px;margin-bottom:23px}
+.right-block h3{font-size:12px;margin:0 0 12px}.right-block p{font-size:11px;line-height:1.6;color:#777;margin:0}
+.quick{display:grid;gap:4px}.quick a{display:flex;align-items:center;gap:11px;padding:9px 0;font-size:11px;color:#333}
+.quick-icon{width:30px;height:30px;border:1px solid #e9e9ed;border-radius:9px;display:grid;place-items:center;color:#333;font-size:14px}
+.knowledge-card{height:110px;border-radius:13px;background:radial-gradient(ellipse at 50% 50%,#8152cb,#22153f 60%,#0b0916);position:relative;overflow:hidden;margin:12px 0}
+.knowledge-card:before{content:"";position:absolute;width:160px;height:70px;border:1px solid #c9a9ff;border-radius:50%;transform:rotate(-22deg);left:18%;top:17%;box-shadow:0 0 25px #a37aff}
+.knowledge-card:after{content:"✦";position:absolute;color:#fff;left:53%;top:40%;font-size:18px;text-shadow:0 0 12px #fff}
+footer{background:#fff;border-top:1px solid var(--line);padding:22px clamp(24px,4vw,54px);font-size:10px;color:#888}
+@media(max-width:1180px){:root{--side:210px;--right:235px}.module-grid{grid-template-columns:repeat(2,1fr)}.hero-grid{grid-template-columns:1fr}.hero-art{position:absolute;right:0;top:50px;width:45%;opacity:.65}.hero-copy{position:relative;z-index:2}}
+@media(max-width:850px){:root{--side:74px;--right:0px}.sidebar{padding:20px 10px}.brand{justify-content:center;padding:0 0 35px}.brand-copy,.nav-label,.nav a span,.account-copy{display:none}.nav a{justify-content:center;padding:13px 8px}.nav svg{width:20px;height:20px}.account{justify-content:center;padding:15px 0 0}.rightbar{display:none}.layout{grid-template-columns:var(--side) minmax(0,1fr)}.hero-art{width:38%;opacity:.3}}
+@media(max-width:600px){:root{--side:0px}.sidebar{display:none}.layout{display:block}.topbar{height:62px;padding:0 18px}.content-section{padding:42px 20px}.hero-section{min-height:720px}.hero-art{width:65%;top:100px;right:-10%;opacity:.22}.hero-copy p{font-size:14px}.module-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.module{min-height:116px;padding:13px}.stats{margin-top:30px}.stat{min-width:90px;padding:10px 12px}.stat b{font-size:19px}.galaxy-content{grid-template-columns:1fr}.galaxy-map{height:220px}.galaxy-section{padding-top:55px;padding-bottom:55px}.feature-layout{grid-template-columns:1fr}.photo-placeholder{height:230px}.section-heading h2{font-size:34px}}
 </style>
 </head>
 <body>
-<section class="hero galaxy" id="top">
- <div class="galaxy-inner wrap">
-  <header class="nav">
-   <a class="logo" href="#top">ZADNEPROVSKII</a>
-   <div class="nav-right">
-    <div class="lang" aria-label="Language">
-     <button class="active" data-lang="ru">RU</button><button data-lang="en">EN</button><button data-lang="it">IT</button><button data-lang="zh">中文</button>
-    </div>
-    <a class="nav-link" href="#about" data-i18n="more">Подробнее</a>
-   </div>
-  </header>
-  <svg class="constellation" viewBox="0 0 1440 820" preserveAspectRatio="none" aria-hidden="true">
-   <g fill="none" stroke="#b7a3ff" stroke-width="1" opacity=".28">
-    <path d="M85 170 L220 245 L350 180 L480 300 L620 230 L770 315 L930 205 L1080 270 L1240 165 L1370 240"/>
-    <path d="M220 245 L260 420 L430 480 L580 390 L770 315 L850 500 L1030 455 L1180 540 L1370 430"/>
-    <path d="M350 180 L430 480 M620 230 L580 390 M930 205 L1030 455 M1080 270 L1180 540"/>
-   </g>
-   <g fill="#eee9ff">
-    <circle cx="85" cy="170" r="2"/><circle cx="220" cy="245" r="2.5"/><circle cx="350" cy="180" r="2"/><circle cx="480" cy="300" r="2"/><circle cx="620" cy="230" r="2.8"/><circle cx="770" cy="315" r="2"/><circle cx="930" cy="205" r="2.4"/><circle cx="1080" cy="270" r="2"/><circle cx="1240" cy="165" r="2.5"/><circle cx="1370" cy="240" r="2"/><circle cx="260" cy="420" r="1.8"/><circle cx="430" cy="480" r="2.3"/><circle cx="580" cy="390" r="1.8"/><circle cx="850" cy="500" r="2"/><circle cx="1030" cy="455" r="2.2"/><circle cx="1180" cy="540" r="2"/><circle cx="1370" cy="430" r="2"/>
-   </g>
-  </svg>
-  <main class="hero-center">
+<div class="layout">
+<aside class="sidebar">
+ <div class="brand"><div class="brand-mark"></div><div class="brand-copy"><div class="brand-name">ZADNEPROVSKII</div><div class="brand-sub">ONE ACCOUNT. ONE UNIVERSE.</div></div></div>
+ <div class="nav-label" data-t="workspace">РАБОЧЕЕ ПРОСТРАНСТВО</div>
+ <nav class="nav">
+  <a class="active" href="#home"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7"/><path d="M5 9v11h14V9M9 20v-6h6v6"/></svg><span data-t="universe">Вселенная</span></a>
+  <a href="#modules"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v9a2.5 2.5 0 0 1-2.5 2.5H10l-5 4v-4.5a2.5 2.5 0 0 1-1-2z"/></svg><span data-t="messenger">Мессенджер</span></a>
+  <a href="#modules"><svg viewBox="0 0 24 24"><path d="M12 2v5m0 10v5M2 12h5m10 0h5M5 5l3.5 3.5m7 7L19 19m0-14-3.5 3.5m-7 7L5 19"/></svg><span data-t="ai">ИИ-ассистент</span></a>
+  <a href="#modules"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.2 2.5-5 6-5s6 1.8 6 5M16 5a3 3 0 0 1 0 6m2 4c2 .6 3 2.2 3 5"/></svg><span data-t="community">Сообщество</span></a>
+  <a href="#modules"><svg viewBox="0 0 24 24"><path d="M5 3h14v18H5zM8 7h8M8 11h8M8 15h5"/></svg><span data-t="notes">Заметки</span></a>
+  <a href="#modules"><svg viewBox="0 0 24 24"><path d="M6 4h12v17l-6-4-6 4z"/></svg><span data-t="saved">Сохранённое</span></a>
+ </nav>
+ <div class="nav-sep"></div>
+ <nav class="nav">
+  <a href="#profile"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3-6 8-6s8 2 8 6"/></svg><span data-t="profile">Профиль</span></a>
+  <a href="#profile"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1 1.2 1-1.5 2.6-1.5-.6a8 8 0 0 1-1.5.9l-.3 1.6h-3l-.3-1.6a8 8 0 0 1-1.5-.9l-1.5.6-1.5-2.6 1.2-1a8 8 0 0 1 0-1.8l-1.2-1 1.5-2.6 1.5.6a8 8 0 0 1 1.5-.9l.3-1.6h3l.3 1.6a8 8 0 0 1 1.5.9l1.5-.6 1.5 2.6-1.2 1a8 8 0 0 1 0 1.7z"/></svg><span data-t="settings">Настройки</span></a>
+ </nav>
+ <div class="account"><div class="account-avatar">И</div><div class="account-copy"><b data-t="explorer">Исследователь</b><small data-t="personal">Личное пространство</small></div></div>
+</aside>
+
+<main class="center">
+ <div class="topbar"><div class="breadcrumb"><span data-t="space">Пространство</span> / <b data-t="homeLabel">Главная</b></div><div class="top-actions"><button class="round-btn" aria-label="Search">⌕</button><button class="round-btn" aria-label="Notifications">♧</button><select class="language" id="language" aria-label="Language"><option value="ru">RU</option><option value="en">EN</option><option value="it">IT</option><option value="zh">中文</option></select></div></div>
+
+ <section class="content-section hero-section" id="home">
+  <div class="hero-grid">
    <div class="hero-copy">
-    <div class="kicker" data-i18n="kicker">НЕБОЛЬШОЕ ПРОСТРАНСТВО ДЛЯ ОБЩЕНИЯ</div>
-    <h1 data-i18n="heroTitle">Твоё пространство.<br>Твои люди.</h1>
-    <p class="hero-desc" data-i18n="heroDesc">Простое место для разговоров. Создай комнату, пригласи близких и общайтесь без лишних сложностей.</p>
-    <div class="actions"><a class="btn btn-light" href="#features" data-i18n="create">Создать комнату</a><a class="btn btn-ghost" href="#about" data-i18n="how">Как это работает</a></div>
+    <div class="eyebrow">Z A D N E P R O V S K I I</div>
+    <h1 data-t="heroTitle">Твоё пространство.<br>Твои люди.</h1>
+    <p data-t="heroDesc">Цифровая среда для общения, знаний, творчества и развития.</p>
+    <div class="actions"><a class="btn btn-dark" href="#modules" data-t="create">Создать аккаунт</a><a class="btn btn-outline" href="#about" data-t="learn">Узнать больше</a></div>
+    <div class="stats"><div class="stat"><small data-t="objects">Объектов</small><b>26</b></div><div class="stat"><small data-t="constellations">Созвездий</small><b>01</b></div><div class="stat"><small data-t="nodes">Узлов</small><b>08</b></div></div>
    </div>
-   <div class="scroll-hint"><span data-i18n="scroll">ЛИСТАЙТЕ ВНИЗ</span><span>↓</span></div>
-  </main>
- </div>
-</section>
-
-<section class="white-section" id="about">
- <div class="wrap split">
-  <div>
-   <div class="section-kicker" data-i18n="aboutKicker">ОДНО ПРОСТРАНСТВО — МНОГО ВОЗМОЖНОСТЕЙ</div>
-   <h2 class="section-title" data-i18n="aboutTitle">Больше, чем просто переписка.</h2>
-   <p class="section-lead" data-i18n="aboutDesc">ZADNEPROVSKII объединяет общение, идеи и людей в одном цифровом пространстве. Без перегруженности. Только то, что действительно нужно.</p>
+   <div class="hero-art"><div class="mountain"><svg viewBox="0 0 500 320" aria-hidden="true"><defs><linearGradient id="snow" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#d9dce4"/><stop offset="1" stop-color="#fff"/></linearGradient><filter id="soft"><feGaussianBlur stdDeviation="12"/></filter></defs><path d="M0 260 105 170 160 205 275 45 330 118 375 90 500 265Z" fill="url(#snow)" opacity=".9"/><path d="m205 125 70-80 55 73-35-20-20 24-22-18-25 26z" fill="#fff" opacity=".9"/><path d="M0 255q90-35 155-5t130-7q100-30 215 8v69H0z" fill="#fff" opacity=".7" filter="url(#soft)"/></svg></div></div>
   </div>
-  <div class="visual-card" aria-label="Messenger interface preview">
-   <div class="mock-window"><div class="mock-top"><i class="dot"></i><i class="dot"></i><i class="dot"></i></div>
-    <div class="mock-row"><div class="mock-avatar"></div><div style="flex:1"><div class="mock-line long"></div><div class="mock-line short"></div></div></div>
-    <div class="mock-row"><div class="mock-avatar" style="background:linear-gradient(135deg,#c2d7ff,#e9efff)"></div><div style="flex:1"><div class="mock-line long"></div><div class="mock-line short"></div></div></div>
-    <div class="mock-row"><div class="mock-avatar" style="background:linear-gradient(135deg,#d2f0df,#effaf3)"></div><div style="flex:1"><div class="mock-line long"></div><div class="mock-line short"></div></div></div>
-    <div style="height:46px;background:#f6f4fb;border-radius:9px;margin-top:15px"></div>
+  <div class="module-grid" id="modules">
+   <a class="module" href="#about"><div class="module-icon"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v9a2.5 2.5 0 0 1-2.5 2.5H10l-5 4v-4.5a2.5 2.5 0 0 1-1-2z"/></svg></div><b data-t="messenger">Общение</b><small data-t="messengerSub">Люди и комнаты</small></a>
+   <a class="module" href="#about"><div class="module-icon"><svg viewBox="0 0 24 24"><path d="M3 8c0-3 2-5 5-5 4 0 4 6 4 9s0 9 4 9c3 0 5-2 5-5s-2-5-5-5c-4 0-4 6-4 9"/></svg></div><b data-t="ai">ИИ-ассистент</b><small data-t="aiSub">Знания и помощь</small></a>
+   <a class="module" href="#about"><div class="module-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.2 2.5-5 6-5s6 1.8 6 5M16 5a3 3 0 0 1 0 6m2 4c2 .6 3 2.2 3 5"/></svg></div><b data-t="community">Сообщество</b><small data-t="communitySub">Идеи и обсуждения</small></a>
+   <a class="module" href="#about"><div class="module-icon"><svg viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></div><b data-t="notes">Заметки</b><small data-t="notesSub">Мысли и проекты</small></a>
+  </div>
+ </section>
+
+ <section class="content-section galaxy-section" id="universe">
+  <div class="galaxy-content">
+   <div><div class="eyebrow" data-t="universeEyebrow">ТВОЯ ЦИФРОВАЯ ВСЕЛЕННАЯ</div><h2 data-t="universeTitle">Исследуй<br>свою вселенную.</h2><p data-t="universeDesc">Создавай, общайся, учись, развивайся. Всё в одном пространстве.</p><a href="#about" class="btn btn-outline" style="border-color:#ffffff80;color:#fff;background:#ffffff0b" data-t="openUniverse">Открыть Вселенную →</a></div>
+   <div class="galaxy-map"><svg viewBox="0 0 600 360" aria-label="Static constellation map"><g class="links"><path d="M55 250 145 185 230 220 300 115 390 165 480 55 550 145 500 270 390 300 300 250 190 315"/><path d="M145 185 190 315M230 220 300 250M300 115 390 165M390 165 500 270M480 55 550 145M390 300 500 270"/></g><g class="glow"><circle cx="55" cy="250" r="18"/><circle cx="145" cy="185" r="18"/><circle cx="300" cy="115" r="20"/><circle cx="480" cy="55" r="18"/><circle cx="500" cy="270" r="19"/></g><g class="stars"><circle cx="55" cy="250" r="3"/><circle cx="145" cy="185" r="3.5"/><circle cx="230" cy="220" r="2.5"/><circle cx="300" cy="115" r="4"/><circle cx="390" cy="165" r="3"/><circle cx="480" cy="55" r="4"/><circle cx="550" cy="145" r="3"/><circle cx="500" cy="270" r="3.5"/><circle cx="390" cy="300" r="2.5"/><circle cx="300" cy="250" r="3"/><circle cx="190" cy="315" r="2.5"/></g></svg></div>
+  </div>
+ </section>
+
+ <section class="content-section white-section" id="about">
+  <div class="feature-layout">
+   <div><div class="eyebrow" data-t="possibilities">ВОЗМОЖНОСТИ</div><div class="section-heading"><h2 data-t="aboutTitle">Больше, чем мессенджер.</h2><p data-t="aboutDesc">Единое пространство, где общение, знания и идеи дополняют друг друга. Выбирай нужные инструменты и создавай собственный ритм.</p></div>
+    <div class="feature-list">
+     <div class="feature-line"><i>✦</i><div><b data-t="f1">Одна цифровая среда</b><small data-t="f1d">Всё необходимое собрано в одном месте.</small></div></div>
+     <div class="feature-line"><i>⌘</i><div><b data-t="f2">Связанные пространства</b><small data-t="f2d">Переходи между общением, идеями и личными заметками.</small></div></div>
+     <div class="feature-line"><i>◎</i><div><b data-t="f3">Твой собственный мир</b><small data-t="f3d">Настраивай среду под себя и свои интересы.</small></div></div>
+    </div>
    </div>
+   <div class="photo-placeholder" role="img" aria-label="Abstract mountain landscape placeholder"></div>
   </div>
- </div>
-</section>
+ </section>
+ <footer id="profile"><span class="brand-name">ZADNEPROVSKII</span><span style="float:right">ONE ACCOUNT. ONE UNIVERSE.</span></footer>
+</main>
 
-<section class="white-section" id="features" style="padding-top:15px">
- <div class="wrap">
-  <div class="section-kicker" data-i18n="featuresKicker">ТВОЁ ЦИФРОВОЕ ПРОСТРАНСТВО</div>
-  <h2 class="section-title" data-i18n="featuresTitle">Всё важное — рядом.</h2>
-  <div class="feature-grid">
-   <article class="feature"><div class="feature-icon">◌</div><h3 data-i18n="messenger">Messenger</h3><p data-i18n="messengerDesc">Комнаты и разговоры с людьми, которых ты выбираешь.</p></article>
-   <article class="feature"><div class="feature-icon">✳</div><h3>AI</h3><p data-i18n="aiDesc">Помощник для вопросов, идей и новых открытий.</p></article>
-   <article class="feature"><div class="feature-icon">⌘</div><h3 data-i18n="community">Community</h3><p data-i18n="communityDesc">Тематические пространства, публикации и обсуждения.</p></article>
-   <article class="feature"><div class="feature-icon">▤</div><h3 data-i18n="notes">Notes</h3><p data-i18n="notesDesc">Личное место для мыслей, заметок и планов.</p></article>
-   <article class="feature"><div class="feature-icon">◇</div><h3 data-i18n="saved">Saved</h3><p data-i18n="savedDesc">Сохраняй то, к чему захочется вернуться.</p></article>
-   <article class="feature"><div class="feature-icon">◎</div><h3 data-i18n="profile">Profile</h3><p data-i18n="profileDesc">Твоё пространство и твоя цифровая идентичность.</p></article>
-  </div>
- </div>
-</section>
-
-<section class="galaxy gallery-band">
- <div class="galaxy-inner wrap">
-  <div class="gallery-head">
-   <div class="kicker" data-i18n="universeKicker">НЕ ПРОСТО ПЛАТФОРМА</div>
-   <h2 class="section-title" style="color:#fff" data-i18n="universeTitle">Своя маленькая вселенная.</h2>
-   <p class="section-lead" style="color:rgba(255,255,255,.68)" data-i18n="universeDesc">Создавай связи, находи идеи и собирай вокруг себя то, что имеет значение.</p>
-  </div>
-  <div class="gallery-grid">
-   <div class="gallery-tile"><div class="tile-content"><small data-i18n="tileOneKicker">CONNECTIONS</small><h3 data-i18n="tileOne">Люди и пространства</h3></div></div>
-   <div class="gallery-tile"><div class="tile-content"><small data-i18n="tileTwoKicker">DISCOVERY</small><h3 data-i18n="tileTwo">Идеи и открытия</h3></div></div>
-  </div>
- </div>
-</section>
-
-<section class="galaxy final-cta">
- <div class="galaxy-inner wrap">
-  <div class="kicker" data-i18n="finalKicker">ТВОЯ ВСЕЛЕННАЯ НАЧИНАЕТСЯ ЗДЕСЬ</div>
-  <h2 data-i18n="finalTitle">Создай пространство для своего мира.</h2>
-  <p data-i18n="finalDesc">Начни с разговора. Остальное появится постепенно.</p>
-  <a class="btn btn-light" href="#top" data-i18n="backTop">Вернуться наверх ↑</a>
- </div>
-</section>
-<footer><div class="wrap footer-inner"><span class="logo">ZADNEPROVSKII</span><span>© 2026 ZADNEPROVSKII</span></div></footer>
-
+<aside class="rightbar">
+ <div class="right-status"><span class="green-dot"></span><span data-t="online">Система в сети</span></div>
+ <div class="right-block"><h3 data-t="yourSpace">ВАШЕ ПРОСТРАНСТВО</h3><p data-t="spaceDesc">Один аккаунт. Одна вселенная. Всё необходимое в единой среде.</p></div>
+ <div class="right-block"><h3 data-t="quick">БЫСТРЫЙ ДОСТУП</h3><div class="quick">
+  <a href="#modules"><span class="quick-icon">▢</span><span data-t="messenger">Мессенджер</span> <span style="margin-left:auto">›</span></a>
+  <a href="#modules"><span class="quick-icon">∞</span><span data-t="ai">ИИ-ассистент</span><span style="margin-left:auto">›</span></a>
+  <a href="#modules"><span class="quick-icon">♧</span><span data-t="community">Сообщество</span><span style="margin-left:auto">›</span></a>
+  <a href="#modules"><span class="quick-icon">▤</span><span data-t="notes">Заметки</span><span style="margin-left:auto">›</span></a>
+ </div></div>
+ <div class="right-block"><h3 data-t="knowledge">ВСЕЛЕННАЯ ЗНАНИЙ</h3><div class="knowledge-card"></div><p data-t="knowledgeDesc">Открывайте новое, создавайте и развивайтесь вместе.</p></div>
+ <div class="right-block" style="border:0"><h3 data-t="preview">ПРЕДПРОСМОТР 0.8</h3><p>Interface concept · 2026</p></div>
+</aside>
+</div>
 <script>
-const translations={
-ru:{more:"Подробнее",kicker:"НЕБОЛЬШОЕ ПРОСТРАНСТВО ДЛЯ ОБЩЕНИЯ",heroTitle:"Твоё пространство.<br>Твои люди.",heroDesc:"Простое место для разговоров. Создай комнату, пригласи близких и общайтесь без лишних сложностей.",create:"Создать комнату",how:"Как это работает",scroll:"ЛИСТАЙТЕ ВНИЗ",aboutKicker:"ОДНО ПРОСТРАНСТВО — МНОГО ВОЗМОЖНОСТЕЙ",aboutTitle:"Больше, чем просто переписка.",aboutDesc:"ZADNEPROVSKII объединяет общение, идеи и людей в одном цифровом пространстве. Без перегруженности. Только то, что действительно нужно.",featuresKicker:"ТВОЁ ЦИФРОВОЕ ПРОСТРАНСТВО",featuresTitle:"Всё важное — рядом.",messenger:"Messenger",messengerDesc:"Комнаты и разговоры с людьми, которых ты выбираешь.",aiDesc:"Помощник для вопросов, идей и новых открытий.",community:"Community",communityDesc:"Тематические пространства, публикации и обсуждения.",notes:"Notes",notesDesc:"Личное место для мыслей, заметок и планов.",saved:"Saved",savedDesc:"Сохраняй то, к чему захочется вернуться.",profile:"Profile",profileDesc:"Твоё пространство и твоя цифровая идентичность.",universeKicker:"НЕ ПРОСТО ПЛАТФОРМА",universeTitle:"Своя маленькая вселенная.",universeDesc:"Создавай связи, находи идеи и собирай вокруг себя то, что имеет значение.",tileOneKicker:"CONNECTIONS",tileOne:"Люди и пространства",tileTwoKicker:"DISCOVERY",tileTwo:"Идеи и открытия",finalKicker:"ТВОЯ ВСЕЛЕННАЯ НАЧИНАЕТСЯ ЗДЕСЬ",finalTitle:"Создай пространство для своего мира.",finalDesc:"Начни с разговора. Остальное появится постепенно.",backTop:"Вернуться наверх ↑"},
-en:{more:"Explore",kicker:"A SMALL SPACE TO CONNECT",heroTitle:"Your space.<br>Your people.",heroDesc:"A simple place to talk. Create a room, invite your people, and connect without the noise.",create:"Create a room",how:"How it works",scroll:"SCROLL TO EXPLORE",aboutKicker:"ONE SPACE — MANY POSSIBILITIES",aboutTitle:"More than just messaging.",aboutDesc:"ZADNEPROVSKII brings conversations, ideas, and people together in one digital space. No clutter. Just what matters.",featuresKicker:"YOUR DIGITAL SPACE",featuresTitle:"Everything that matters, together.",messenger:"Messenger",messengerDesc:"Rooms and conversations with the people you choose.",aiDesc:"An assistant for questions, ideas, and discovery.",community:"Community",communityDesc:"Topic-based spaces, posts, and conversations.",notes:"Notes",notesDesc:"A personal place for thoughts, notes, and plans.",saved:"Saved",savedDesc:"Keep what you want to come back to.",profile:"Profile",profileDesc:"Your space and your digital identity.",universeKicker:"MORE THAN A PLATFORM",universeTitle:"A universe of your own.",universeDesc:"Build connections, discover ideas, and bring together what matters to you.",tileOneKicker:"CONNECTIONS",tileOne:"People and spaces",tileTwoKicker:"DISCOVERY",tileTwo:"Ideas and discoveries",finalKicker:"YOUR UNIVERSE STARTS HERE",finalTitle:"Create a space for your world.",finalDesc:"Start with a conversation. Let everything else grow from there.",backTop:"Back to top ↑"},
-it:{more:"Scopri",kicker:"UN PICCOLO SPAZIO PER CONNETTERSI",heroTitle:"Il tuo spazio.<br>Le tue persone.",heroDesc:"Un posto semplice per parlare. Crea una stanza, invita le persone a te care e connettiti senza complicazioni.",create:"Crea una stanza",how:"Come funziona",scroll:"SCORRI PER ESPLORARE",aboutKicker:"UNO SPAZIO — TANTE POSSIBILITÀ",aboutTitle:"Molto più di una chat.",aboutDesc:"ZADNEPROVSKII riunisce conversazioni, idee e persone in un unico spazio digitale. Senza confusione. Solo ciò che conta.",featuresKicker:"IL TUO SPAZIO DIGITALE",featuresTitle:"Tutto ciò che conta, insieme.",messenger:"Messenger",messengerDesc:"Stanze e conversazioni con le persone che scegli.",aiDesc:"Un assistente per domande, idee e nuove scoperte.",community:"Community",communityDesc:"Spazi tematici, pubblicazioni e discussioni.",notes:"Notes",notesDesc:"Uno spazio personale per pensieri, appunti e progetti.",saved:"Saved",savedDesc:"Conserva ciò a cui vorrai tornare.",profile:"Profile",profileDesc:"Il tuo spazio e la tua identità digitale.",universeKicker:"NON SOLO UNA PIATTAFORMA",universeTitle:"Un piccolo universo tutto tuo.",universeDesc:"Crea connessioni, scopri idee e raccogli ciò che conta per te.",tileOneKicker:"CONNECTIONS",tileOne:"Persone e spazi",tileTwoKicker:"DISCOVERY",tileTwo:"Idee e scoperte",finalKicker:"IL TUO UNIVERSO INIZIA QUI",finalTitle:"Crea uno spazio per il tuo mondo.",finalDesc:"Inizia con una conversazione. Il resto crescerà con il tempo.",backTop:"Torna su ↑"},
-zh:{more:"了解更多",kicker:"一个用来连接彼此的小空间",heroTitle:"你的空间。<br>你的人。",heroDesc:"一个简单的交流空间。创建房间，邀请朋友，轻松保持联系。",create:"创建房间",how:"了解运作方式",scroll:"向下探索",aboutKicker:"一个空间，多种可能",aboutTitle:"不只是聊天。",aboutDesc:"ZADNEPROVSKII 将交流、想法与人汇聚在一个数字空间中。简洁清晰，只留下真正重要的内容。",featuresKicker:"你的数字空间",featuresTitle:"重要的一切，都在这里。",messenger:"Messenger",messengerDesc:"与自己选择的人创建房间并交流。",aiDesc:"帮助你提问、思考和探索的助手。",community:"Community",communityDesc:"主题空间、帖子与讨论。",notes:"Notes",notesDesc:"记录想法、笔记与计划的私人空间。",saved:"Saved",savedDesc:"保存值得以后再次查看的内容。",profile:"Profile",profileDesc:"你的空间与数字身份。",universeKicker:"不只是一个平台",universeTitle:"属于你自己的小宇宙。",universeDesc:"建立联系，发现想法，汇集对你真正重要的事物。",tileOneKicker:"CONNECTIONS",tileOne:"人与空间",tileTwoKicker:"DISCOVERY",tileTwo:"想法与发现",finalKicker:"你的宇宙从这里开始",finalTitle:"为你的世界创造一个空间。",finalDesc:"从一次对话开始。其他的一切会慢慢生长。",backTop:"返回顶部 ↑"}
+const dict={
+ru:{workspace:"РАБОЧЕЕ ПРОСТРАНСТВО",universe:"Вселенная",messenger:"Мессенджер",ai:"ИИ-ассистент",community:"Сообщество",notes:"Заметки",saved:"Сохранённое",profile:"Профиль",settings:"Настройки",explorer:"Исследователь",personal:"Личное пространство",space:"Пространство",homeLabel:"Главная",heroTitle:"Твоё пространство.<br>Твои люди.",heroDesc:"Цифровая среда для общения, знаний, творчества и развития.",create:"Создать аккаунт",learn:"Узнать больше",objects:"Объектов",constellations:"Созвездий",nodes:"Узлов",messengerSub:"Люди и комнаты",aiSub:"Знания и помощь",communitySub:"Идеи и обсуждения",notesSub:"Мысли и проекты",universeEyebrow:"ТВОЯ ЦИФРОВАЯ ВСЕЛЕННАЯ",universeTitle:"Исследуй<br>свою вселенную.",universeDesc:"Создавай, общайся, учись, развивайся. Всё в одном пространстве.",openUniverse:"Открыть Вселенную →",possibilities:"ВОЗМОЖНОСТИ",aboutTitle:"Больше, чем мессенджер.",aboutDesc:"Единое пространство, где общение, знания и идеи дополняют друг друга. Выбирай нужные инструменты и создавай собственный ритм.",f1:"Одна цифровая среда",f1d:"Всё необходимое собрано в одном месте.",f2:"Связанные пространства",f2d:"Переходи между общением, идеями и личными заметками.",f3:"Твой собственный мир",f3d:"Настраивай среду под себя и свои интересы.",online:"Система в сети",yourSpace:"ВАШЕ ПРОСТРАНСТВО",spaceDesc:"Один аккаунт. Одна вселенная. Всё необходимое в единой среде.",quick:"БЫСТРЫЙ ДОСТУП",knowledge:"ВСЕЛЕННАЯ ЗНАНИЙ",knowledgeDesc:"Открывайте новое, создавайте и развивайтесь вместе.",preview:"ПРЕДПРОСМОТР 0.8"},
+en:{workspace:"WORKSPACE",universe:"Universe",messenger:"Messenger",ai:"AI Assistant",community:"Community",notes:"Notes",saved:"Saved",profile:"Profile",settings:"Settings",explorer:"Explorer",personal:"Personal space",space:"Workspace",homeLabel:"Home",heroTitle:"Your space.<br>Your people.",heroDesc:"A digital environment for conversations, knowledge, creativity, and growth.",create:"Create account",learn:"Learn more",objects:"Objects",constellations:"Constellations",nodes:"Nodes",messengerSub:"People and rooms",aiSub:"Knowledge and help",communitySub:"Ideas and discussions",notesSub:"Thoughts and projects",universeEyebrow:"YOUR DIGITAL UNIVERSE",universeTitle:"Explore<br>your universe.",universeDesc:"Create, connect, learn, and grow. All in one space.",openUniverse:"Explore Universe →",possibilities:"POSSIBILITIES",aboutTitle:"More than a messenger.",aboutDesc:"One space where conversations, knowledge, and ideas come together. Choose the tools you need and create your own rhythm.",f1:"One digital environment",f1d:"Everything you need, gathered in one place.",f2:"Connected spaces",f2d:"Move between conversations, ideas, and personal notes.",f3:"A world of your own",f3d:"Shape your space around your interests.",online:"System online",yourSpace:"YOUR SPACE",spaceDesc:"One account. One universe. Everything you need in one environment.",quick:"QUICK ACCESS",knowledge:"UNIVERSE OF KNOWLEDGE",knowledgeDesc:"Discover, create, and grow together.",preview:"PREVIEW 0.8"},
+it:{workspace:"SPAZIO DI LAVORO",universe:"Universo",messenger:"Messenger",ai:"Assistente IA",community:"Community",notes:"Note",saved:"Salvati",profile:"Profilo",settings:"Impostazioni",explorer:"Esploratore",personal:"Spazio personale",space:"Spazio",homeLabel:"Home",heroTitle:"Il tuo spazio.<br>Le tue persone.",heroDesc:"Uno spazio digitale per conversazioni, conoscenza, creatività e crescita.",create:"Crea account",learn:"Scopri di più",objects:"Oggetti",constellations:"Costellazioni",nodes:"Nodi",messengerSub:"Persone e stanze",aiSub:"Conoscenza e supporto",communitySub:"Idee e discussioni",notesSub:"Pensieri e progetti",universeEyebrow:"IL TUO UNIVERSO DIGITALE",universeTitle:"Esplora<br>il tuo universo.",universeDesc:"Crea, comunica, impara e cresci. Tutto in un unico spazio.",openUniverse:"Apri l'Universo →",possibilities:"POSSIBILITÀ",aboutTitle:"Più di un messenger.",aboutDesc:"Un unico spazio in cui conversazioni, conoscenze e idee si incontrano. Scegli gli strumenti e crea il tuo ritmo.",f1:"Un unico ambiente digitale",f1d:"Tutto ciò che serve, in un solo posto.",f2:"Spazi connessi",f2d:"Passa dalle conversazioni alle idee e alle note personali.",f3:"Un mondo tutto tuo",f3d:"Personalizza lo spazio secondo i tuoi interessi.",online:"Sistema online",yourSpace:"IL TUO SPAZIO",spaceDesc:"Un account. Un universo. Tutto ciò che serve in un unico ambiente.",quick:"ACCESSO RAPIDO",knowledge:"UNIVERSO DELLA CONOSCENZA",knowledgeDesc:"Scopri, crea e cresci insieme.",preview:"ANTEPRIMA 0.8"},
+zh:{workspace:"工作空间",universe:"宇宙",messenger:"消息",ai:"AI 助手",community:"社区",notes:"笔记",saved:"收藏",profile:"个人资料",settings:"设置",explorer:"探索者",personal:"个人空间",space:"空间",homeLabel:"主页",heroTitle:"你的空间。<br>你的人。",heroDesc:"用于交流、知识、创造与成长的数字环境。",create:"创建账户",learn:"了解更多",objects:"对象",constellations:"星座",nodes:"节点",messengerSub:"人与聊天室",aiSub:"知识与帮助",communitySub:"想法与讨论",notesSub:"思考与项目",universeEyebrow:"你的数字宇宙",universeTitle:"探索<br>你的宇宙。",universeDesc:"创造、交流、学习与成长。尽在一个空间。",openUniverse:"进入宇宙 →",possibilities:"功能与可能",aboutTitle:"不只是消息工具。",aboutDesc:"让交流、知识与想法汇聚于同一空间。选择所需工具，建立自己的节奏。",f1:"统一的数字环境",f1d:"所需的一切都汇集在一个地方。",f2:"彼此连接的空间",f2d:"在交流、想法和个人笔记之间自由切换。",f3:"属于你自己的世界",f3d:"根据兴趣定制你的空间。",online:"系统在线",yourSpace:"你的空间",spaceDesc:"一个账户，一个宇宙，在同一环境中拥有所需的一切。",quick:"快速访问",knowledge:"知识宇宙",knowledgeDesc:"一起探索、创造与成长。",preview:"预览 0.8"}
 };
-function setLanguage(lang){
- const dict=translations[lang]||translations.ru;
- document.documentElement.lang=lang;
- document.querySelectorAll("[data-i18n]").forEach(el=>{const key=el.dataset.i18n;if(dict[key])el.innerHTML=dict[key]});
- document.querySelectorAll(".lang button").forEach(b=>b.classList.toggle("active",b.dataset.lang===lang));
- try{localStorage.setItem("zadneprovskii-lang",lang)}catch(e){}
-}
-document.querySelectorAll(".lang button").forEach(b=>b.addEventListener("click",()=>setLanguage(b.dataset.lang)));
-setLanguage("ru");
+function setLang(lang){const d=dict[lang]||dict.ru;document.documentElement.lang=lang;document.querySelectorAll("[data-t]").forEach(el=>{const k=el.dataset.t;if(d[k])el.innerHTML=d[k]})}
+document.getElementById("language").addEventListener("change",e=>setLang(e.target.value));
+setLang("ru");
 </script>
-</body></html>
+</body>
+</html>
