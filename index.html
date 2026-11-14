@@ -320,6 +320,46 @@ body:has(#room.on) #lb img { box-shadow:0 20px 70px rgba(0,0,0,.5); }
   .room-splash { transition:none; }
 }
 
+
+/* Stage 1: live conversation details */
+.typing-indicator { min-height:15px; color:#b9a6eb !important; font-size:11px !important; }
+.typing-indicator:empty { display:none; }
+.m { position:relative; }
+.message-meta { display:flex; align-items:center; justify-content:flex-end; gap:7px; margin-top:5px; color:rgba(220,212,242,.58); font-size:10px; }
+.message-actions { display:flex; align-items:center; gap:5px; margin-top:7px; opacity:.72; }
+.message-action {
+  border:1px solid rgba(220,205,255,.13); background:rgba(255,255,255,.045);
+  color:#dcd2f4; border-radius:999px; padding:3px 8px; font-size:11px; cursor:pointer;
+}
+.message-action:hover { background:rgba(255,255,255,.12); opacity:1; }
+.message-reactions { display:flex; flex-wrap:wrap; gap:5px; margin-top:7px; }
+.reaction-chip {
+  border:1px solid rgba(220,205,255,.16); background:rgba(255,255,255,.07);
+  color:#f3edff; border-radius:999px; padding:3px 8px; font-size:12px; cursor:pointer;
+}
+.reaction-chip.mine { background:rgba(139,103,220,.28); border-color:rgba(198,170,255,.48); }
+.reply-quote {
+  display:block; border-left:2px solid #a88ae8; padding:5px 8px; margin:0 0 7px;
+  border-radius:0 7px 7px 0; background:rgba(255,255,255,.055);
+  color:#c9bde4; font-size:11px; cursor:pointer;
+}
+.reply-quote b { display:block; color:#e6dcff; font-size:10px; margin-bottom:2px; }
+.reply-quote span { display:block; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; max-width:100%; }
+.reply-preview {
+  display:flex; align-items:center; gap:10px; padding:8px 16px;
+  border-top:1px solid rgba(213,203,255,.10);
+  background:rgba(20,16,39,.9); color:#eee8ff;
+}
+.reply-preview-copy { min-width:0; flex:1; display:flex; flex-direction:column; gap:2px; }
+.reply-preview-copy small { color:#b99eea; font-size:10px; }
+.reply-preview-copy span { overflow:hidden; white-space:nowrap; text-overflow:ellipsis; font-size:12px; color:#c9c1da; }
+.reply-cancel { border:0; background:transparent; color:#d9ceef; font-size:22px; cursor:pointer; padding:0 5px; }
+@media (hover:hover) {
+  .message-actions { opacity:0; transition:opacity .18s ease; }
+  .m:hover .message-actions, .m:focus-within .message-actions { opacity:1; }
+}
+@media (hover:none) { .message-actions { opacity:1; } }
+
 </style>
 </head>
 <body>
@@ -424,7 +464,7 @@ body:has(#room.on) #lb img { box-shadow:0 20px 70px rgba(0,0,0,.5); }
     </div>
     <header>
       <button class="ic" id="home-btn" data-aria="back"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
-      <div class="t"><b id="title"></b><small id="users"></small></div>
+      <div class="t"><b id="title"></b><small id="users"></small><small id="typing" class="typing-indicator" aria-live="polite"></small></div>
       <button class="pill lang" data-lang-btn></button>
       <button class="ic" id="copy" data-aria="copy"><svg viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg></button>
       <span class="copied" id="copied" hidden data-i="copied"></span>
@@ -433,6 +473,10 @@ body:has(#room.on) #lb img { box-shadow:0 20px 70px rgba(0,0,0,.5); }
     <div class="bar" id="namebar">
       <input type="text" id="nick" data-ph="name" maxlength="24">
       <button class="btn" id="join" data-i="join"></button>
+    </div>
+    <div class="reply-preview" id="reply-preview" style="display:none">
+      <div class="reply-preview-copy"><small id="reply-preview-label">Ответ</small><span id="reply-preview-text"></span></div>
+      <button type="button" class="reply-cancel" id="reply-cancel" aria-label="Отменить ответ">×</button>
     </div>
     <form class="bar" id="f" style="display:none">
       <button type="button" class="ic" id="attach" data-aria="attach"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="1.6"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg></button>
@@ -486,7 +530,8 @@ body:has(#room.on) #lb img { box-shadow:0 20px 70px rgba(0,0,0,.5); }
       full: "Комната переполнена.", imgFail: "Не удалось отправить фото. Попробуй другое.",
       back: "Назад", copy: "Скопировать ссылку", attach: "Прикрепить фото", send: "Отправить", close: "Закрыть",
       splashTitle: "Пространство для общения", splashCopy: "Это ваше пространство для разговоров.",
-      splashNote: "Скопируйте ссылку, пригласите друга и начните общение. Здесь вы можете обмениваться сообщениями и фотографиями.", splashEnter: "Войти в комнату"
+      splashNote: "Скопируйте ссылку, пригласите друга и начните общение. Здесь вы можете обмениваться сообщениями и фотографиями.", splashEnter: "Войти в комнату",
+      typing: "печатает…", reply: "Ответить", replyTo: "Ответ на сообщение", you: "Вы", removeReply: "Отменить ответ",
     },
     en: {
       more: "Learn more", h1: "Your private chat with family and friends", sub: "Share the link!",
@@ -515,7 +560,8 @@ body:has(#room.on) #lb img { box-shadow:0 20px 70px rgba(0,0,0,.5); }
       full: "The room is full.", imgFail: "Could not send the photo. Try another one.",
       back: "Back", copy: "Copy link", attach: "Attach photo", send: "Send", close: "Close",
       splashTitle: "A space for conversation", splashCopy: "This is your space to talk.",
-      splashNote: "Copy the link, invite a friend, and start talking. You can exchange messages and photos here.", splashEnter: "Enter the room"
+      splashNote: "Copy the link, invite a friend, and start talking. You can exchange messages and photos here.", splashEnter: "Enter the room",
+      typing: "is typing…", reply: "Reply", replyTo: "Replying to", you: "You", removeReply: "Cancel reply",
     }
   };
   var lang = "en";
@@ -525,7 +571,7 @@ body:has(#room.on) #lb img { box-shadow:0 20px 70px rgba(0,0,0,.5); }
 
   var m = location.pathname.match(/^\/room\/([a-z0-9-]{1,32})\/?$/i);
   var roomId = m ? m[1] : null;
-  var ws = null, myName = "", lastUsers = [];
+  var ws = null, myName = "", lastUsers = [], selectedReply = null, typingTimer = null, isTyping = false;
   try { myName = localStorage.getItem("nick") || ""; } catch (e) {}
 
   function applyLang() {
@@ -541,6 +587,8 @@ body:has(#room.on) #lb img { box-shadow:0 20px 70px rgba(0,0,0,.5); }
       $("splash-copy").textContent = t("splashCopy");
       $("splash-note").textContent = t("splashNote");
       $("splash-enter").innerHTML = t("splashEnter") + " <span aria-hidden=\"true\">→</span>";
+      $("reply-preview-label").textContent = t("replyTo");
+      $("reply-cancel").setAttribute("aria-label", t("removeReply"));
       $("title").textContent = t("room") + " " + roomId;
       $("users").textContent = lastUsers.length ? t("inRoom") + lastUsers.join(", ") : "";
     }
@@ -594,16 +642,37 @@ body:has(#room.on) #lb img { box-shadow:0 20px 70px rgba(0,0,0,.5); }
   $("home-btn").onclick = function () { location.href = "/"; };
   if (myName) $("nick").value = myName;
 
-  function add(cls, name, text, img) {
+  function shortTime(timestamp) {
+    if (!timestamp) return "";
+    return new Date(timestamp).toLocaleTimeString(lang === "ru" ? "ru-RU" : "en-GB", { hour: "2-digit", minute: "2-digit" });
+  }
+
+  function add(cls, name, text, img, meta) {
+    meta = meta || {};
     var box = $("msgs");
     var near = box.scrollHeight - box.scrollTop - box.clientHeight < 80;
     var d = document.createElement("div");
     d.className = cls;
+    if (meta.id) d.dataset.messageId = meta.id;
+
     if (name) {
       var s = document.createElement("small");
       s.textContent = name;
       d.appendChild(s);
     }
+
+    if (meta.reply) {
+      var quote = document.createElement("div");
+      quote.className = "reply-quote";
+      var qName = document.createElement("b");
+      qName.textContent = meta.reply.name || "";
+      var qText = document.createElement("span");
+      qText.textContent = meta.reply.text || "📷";
+      quote.appendChild(qName);
+      quote.appendChild(qText);
+      d.appendChild(quote);
+    }
+
     if (text) {
       var p = document.createElement("span");
       p.textContent = text;
@@ -617,9 +686,90 @@ body:has(#room.on) #lb img { box-shadow:0 20px 70px rgba(0,0,0,.5); }
       im.onclick = function () { $("lb").querySelector("img").src = img; $("lb").classList.add("on"); };
       d.appendChild(im);
     }
+
+    if (meta.t) {
+      var time = document.createElement("div");
+      time.className = "message-meta";
+      time.textContent = shortTime(meta.t);
+      d.appendChild(time);
+    }
+
+    var reactions = meta.reactions || {};
+    var reactionBar = document.createElement("div");
+    reactionBar.className = "message-reactions";
+    Object.keys(reactions).forEach(function (emoji) {
+      var users = reactions[emoji] || [];
+      if (!users.length) return;
+      var chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = "reaction-chip" + (users.indexOf(myName) !== -1 ? " mine" : "");
+      chip.textContent = emoji + " " + users.length;
+      chip.title = users.join(", ");
+      chip.onclick = function () {
+        if (ws && ws.readyState === 1 && meta.id) ws.send(JSON.stringify({ type: "react", id: meta.id, emoji: emoji }));
+      };
+      reactionBar.appendChild(chip);
+    });
+    if (reactionBar.childNodes.length) d.appendChild(reactionBar);
+
+    if (meta.id && name !== "") {
+      var actions = document.createElement("div");
+      actions.className = "message-actions";
+      ["❤️", "😂", "👍", "✨"].forEach(function (emoji) {
+        var react = document.createElement("button");
+        react.type = "button";
+        react.className = "message-action";
+        react.textContent = emoji;
+        react.title = emoji;
+        react.onclick = function () {
+          if (ws && ws.readyState === 1) ws.send(JSON.stringify({ type: "react", id: meta.id, emoji: emoji }));
+        };
+        actions.appendChild(react);
+      });
+      var replyBtn = document.createElement("button");
+      replyBtn.type = "button";
+      replyBtn.className = "message-action";
+      replyBtn.textContent = t("reply");
+      replyBtn.onclick = function () {
+        selectedReply = { id: meta.id, name: name, text: text || (img ? "📷" : "") };
+        $("reply-preview-text").textContent = (name || "") + ": " + selectedReply.text;
+        $("reply-preview").style.display = "flex";
+        $("txt").focus();
+      };
+      actions.appendChild(replyBtn);
+      d.appendChild(actions);
+    }
+
     box.appendChild(d);
     if (near || cls.indexOf("me") > -1) box.scrollTop = box.scrollHeight;
   }
+
+  function clearReply() {
+    selectedReply = null;
+    $("reply-preview").style.display = "none";
+    $("reply-preview-text").textContent = "";
+  }
+  $("reply-cancel").onclick = clearReply;
+
+  function sendTyping(active) {
+    if (!ws || ws.readyState !== 1 || !myName || isTyping === active) return;
+    isTyping = active;
+    ws.send(JSON.stringify({ type: "typing", active: active }));
+  }
+  $("txt").addEventListener("input", function () {
+    if ($("txt").value.trim()) {
+      sendTyping(true);
+      if (typingTimer) clearTimeout(typingTimer);
+      typingTimer = setTimeout(function () { sendTyping(false); }, 1300);
+    } else {
+      if (typingTimer) clearTimeout(typingTimer);
+      sendTyping(false);
+    }
+  });
+  $("txt").addEventListener("blur", function () {
+    if (typingTimer) clearTimeout(typingTimer);
+    sendTyping(false);
+  });
 
   function connect() {
     var proto = location.protocol === "https:" ? "wss://" : "ws://";
@@ -632,9 +782,24 @@ body:has(#room.on) #lb img { box-shadow:0 20px 70px rgba(0,0,0,.5); }
       if (d.type === "history") {
         $("msgs").innerHTML = "";
         if (!d.list.length) add("sys", "", t("quiet"));
-        d.list.forEach(function (x) { add(x.name === myName ? "m me" : "m", x.name, x.text, x.img); });
+        d.list.forEach(function (x) { add(x.name === myName ? "m me" : "m", x.name, x.text, x.img, x); });
       } else if (d.type === "msg") {
-        add(d.name === myName ? "m me" : "m", d.name, d.text, d.img);
+        add(d.name === myName ? "m me" : "m", d.name, d.text, d.img, d);
+      } else if (d.type === "react") {
+        var old = $("msgs").querySelector('[data-message-id="' + d.id + '"]');
+        if (old) {
+          var box = $("msgs");
+          var nearBottom = box.scrollHeight - box.scrollTop - box.clientHeight < 80;
+          var nextNode = old.nextSibling;
+          old.remove();
+          var msgData = d.message;
+          add(msgData.name === myName ? "m me" : "m", msgData.name, msgData.text, msgData.img, msgData);
+          var replacement = box.lastElementChild;
+          if (nextNode && replacement !== nextNode) box.insertBefore(replacement, nextNode);
+          if (nearBottom) box.scrollTop = box.scrollHeight;
+        }
+      } else if (d.type === "typing") {
+        $("typing").textContent = d.active ? (d.name + " " + t("typing")) : "";
       } else if (d.type === "users") {
         lastUsers = d.list;
         $("users").textContent = t("inRoom") + d.list.join(", ");
@@ -665,8 +830,11 @@ body:has(#room.on) #lb img { box-shadow:0 20px 70px rgba(0,0,0,.5); }
     e.preventDefault();
     var v = $("txt").value.trim();
     if (!v || !ws || ws.readyState !== 1) return;
-    ws.send(JSON.stringify({ type: "msg", text: v }));
+    ws.send(JSON.stringify({ type: "msg", text: v, reply: selectedReply }));
     $("txt").value = "";
+    if (typingTimer) clearTimeout(typingTimer);
+    sendTyping(false);
+    clearReply();
   };
 
   /* фото: уменьшаем перед отправкой */
@@ -688,7 +856,8 @@ body:has(#room.on) #lb img { box-shadow:0 20px 70px rgba(0,0,0,.5); }
       URL.revokeObjectURL(url);
       var data = c.toDataURL("image/jpeg", 0.78);
       if (data.length > 1900000 || !ws || ws.readyState !== 1) { add("sys", "", t("imgFail")); return; }
-      ws.send(JSON.stringify({ type: "img", data: data }));
+      ws.send(JSON.stringify({ type: "img", data: data, reply: selectedReply }));
+      clearReply();
     };
     img.onerror = function () { URL.revokeObjectURL(url); add("sys", "", t("imgFail")); };
     img.src = url;

@@ -41,6 +41,7 @@ const wss = new WebSocketServer({ server, maxPayload: 2 * 1024 * 1024 });
 const rooms = new Map(); // roomId -> { clients: Set<ws>, history: [] }
 const MAX_PER_ROOM = 20;
 const HISTORY = 50;
+const REACTION_SET = new Set(["❤️", "😂", "👍", "✨"]);
 
 function send(ws, obj) {
   if (ws.readyState === 1) ws.send(JSON.stringify(obj));
@@ -56,6 +57,8 @@ wss.on("connection", (ws) => {
   ws.room = null;
   ws.isAlive = true;
   ws.lastMsg = 0;
+  ws.userName = "";
+  ws.isTyping = false;
   ws.on("pong", () => (ws.isAlive = true));
 
   ws.on("message", (raw) => {
@@ -82,7 +85,16 @@ wss.on("connection", (ws) => {
       ws.lastMsg = now;
       const text = String(m.text || "").trim().slice(0, 1000);
       if (!text) return;
-      const msg = { type: "msg", name: ws.userName, text, t: now };
+      const msg = {
+        type: "msg", id: String(m.id || (now.toString(36) + Math.random().toString(36).slice(2, 8))),
+        name: ws.userName, text, t: now,
+        reply: m.reply && typeof m.reply === "object" ? {
+          id: String(m.reply.id || "").slice(0, 80),
+          name: String(m.reply.name || "").slice(0, 24),
+          text: String(m.reply.text || "").slice(0, 180)
+        } : null,
+        reactions: {}
+      };
       ws.room.history.push(msg);
       if (ws.room.history.length > HISTORY) ws.room.history.shift();
       broadcast(ws.room, msg);
@@ -98,16 +110,55 @@ wss.on("connection", (ws) => {
       if (typeof m.data !== "string" || m.data.length > MAX_IMAGE_DATA) return;
       if (!/^data:image\/jpeg;base64,[A-Za-z0-9+/]+={0,2}$/.test(m.data)) return;
 
-      const msg = { type: "msg", name: ws.userName, img: m.data, t: now };
+      const msg = {
+        type: "msg", id: now.toString(36) + Math.random().toString(36).slice(2, 8),
+        name: ws.userName, img: m.data, t: now,
+        reply: m.reply && typeof m.reply === "object" ? {
+          id: String(m.reply.id || "").slice(0, 80),
+          name: String(m.reply.name || "").slice(0, 24),
+          text: String(m.reply.text || "").slice(0, 180)
+        } : null,
+        reactions: {}
+      };
       ws.room.history.push(msg);
       if (ws.room.history.length > HISTORY) ws.room.history.shift();
       broadcast(ws.room, msg);
+    }
+
+    if (m.type === "react" && ws.room) {
+      const id = String(m.id || "").slice(0, 80);
+      const emoji = String(m.emoji || "");
+      if (!id || !REACTION_SET.has(emoji)) return;
+      const target = ws.room.history.find((item) => item.id === id);
+      if (!target) return;
+      if (!target.reactions) target.reactions = {};
+      if (!Array.isArray(target.reactions[emoji])) target.reactions[emoji] = [];
+      const users = target.reactions[emoji];
+      const index = users.indexOf(ws.userName);
+      if (index === -1) users.push(ws.userName);
+      else users.splice(index, 1);
+      if (!users.length) delete target.reactions[emoji];
+      broadcast(ws.room, { type: "react", id, message: target });
+    }
+
+    if (m.type === "typing" && ws.room) {
+      const active = !!m.active;
+      if (ws.isTyping === active) return;
+      ws.isTyping = active;
+      for (const client of ws.room.clients) {
+        if (client !== ws) send(client, { type: "typing", name: ws.userName, active });
+      }
     }
   });
 
   ws.on("close", () => {
     const room = ws.room;
     if (!room) return;
+    if (ws.isTyping) {
+      for (const client of room.clients) {
+        if (client !== ws) send(client, { type: "typing", name: ws.userName, active: false });
+      }
+    }
     room.clients.delete(ws);
     if (room.clients.size === 0) rooms.delete(ws.roomId); // пустая комната удаляется вместе с историей
     else sendUsers(room);
