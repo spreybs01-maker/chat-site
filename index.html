@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Болталка</title>
+<style>
+:root{
+  --bg:#0f1115; --card:#181b21; --text:#eceef2; --mut:#8b93a1;
+  --acc:#7c5cff; --other:#252932; --bd:#2a2e37;
+}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--text);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.app{max-width:640px;height:100%;margin:0 auto;display:flex;flex-direction:column}
+.screen{display:none;flex:1;flex-direction:column;min-height:0}
+.screen.on{display:flex}
+.center{justify-content:center;align-items:center;text-align:center;padding:24px;gap:14px}
+h1{margin:0;font-size:32px}
+p{margin:0;color:var(--mut)}
+button,input{font:inherit}
+button{background:var(--acc);color:#fff;border:0;border-radius:12px;padding:12px 18px;cursor:pointer}
+button.ghost{background:transparent;border:1px solid var(--bd);color:var(--text)}
+input{background:var(--card);color:var(--text);border:1px solid var(--bd);border-radius:12px;padding:12px;min-width:0}
+header{display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--card);border-bottom:1px solid var(--bd)}
+header .t{flex:1;min-width:0}
+header b{display:block}
+header small{color:var(--mut);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#msgs{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:6px}
+.m{max-width:80%;padding:8px 12px;border-radius:16px;background:var(--other);white-space:pre-wrap;word-wrap:break-word}
+.m.me{align-self:flex-end;background:var(--acc)}
+.m small{display:block;font-size:12px;opacity:.7;margin-bottom:2px}
+.sys{align-self:center;color:var(--mut);font-size:13px}
+.bar{display:flex;gap:8px;padding:10px 12px;background:var(--card);border-top:1px solid var(--bd)}
+.bar input{flex:1}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <section class="screen center" id="home">
+    <h1>Болталка</h1>
+    <p>Создай комнату и отправь ссылку другу. Регистрация не нужна.</p>
+    <button id="create">Создать комнату</button>
+  </section>
+
+  <section class="screen" id="room">
+    <header>
+      <button class="ghost" id="home-btn">←</button>
+      <div class="t"><b id="title"></b><small id="users"></small></div>
+      <button id="copy">Скопировать ссылку</button>
+    </header>
+    <div id="msgs"></div>
+    <div class="bar" id="namebar">
+      <input id="nick" placeholder="Твоё имя" maxlength="24">
+      <button id="join">Войти</button>
+    </div>
+    <form class="bar" id="f" style="display:none">
+      <input id="txt" placeholder="Сообщение" autocomplete="off" maxlength="1000">
+      <button>Отправить</button>
+    </form>
+  </section>
+
+</div>
+<script>
+(function () {
+  var $ = function (i) { return document.getElementById(i); };
+  var m = location.pathname.match(/^\/room\/([a-z0-9-]{1,32})\/?$/i);
+  var roomId = m ? m[1] : null;
+  var ws = null, myName = "";
+
+  try { myName = localStorage.getItem("nick") || ""; } catch (e) {}
+
+  function rid() {
+    var a = "abcdefghjkmnpqrstuvwxyz23456789", s = "";
+    for (var i = 0; i < 8; i++) s += a[Math.floor(Math.random() * a.length)];
+    return s;
+  }
+
+  if (!roomId) {
+    $("home").classList.add("on");
+    $("create").onclick = function () { location.href = "/room/" + rid(); };
+    return;
+  }
+
+  $("room").classList.add("on");
+  $("title").textContent = "Комната " + roomId;
+  $("home-btn").onclick = function () { location.href = "/"; };
+  if (myName) $("nick").value = myName;
+
+  function add(cls, name, text) {
+    var box = $("msgs");
+    var near = box.scrollHeight - box.scrollTop - box.clientHeight < 80;
+    var d = document.createElement("div");
+    d.className = cls;
+    if (name) {
+      var s = document.createElement("small");
+      s.textContent = name;
+      d.appendChild(s);
+    }
+    var p = document.createElement("span");
+    p.textContent = text;
+    d.appendChild(p);
+    box.appendChild(d);
+    if (near || cls.indexOf("me") > -1) box.scrollTop = box.scrollHeight;
+  }
+
+  function connect() {
+    var proto = location.protocol === "https:" ? "wss://" : "ws://";
+    ws = new WebSocket(proto + location.host);
+    ws.onopen = function () {
+      ws.send(JSON.stringify({ type: "join", room: roomId, name: myName }));
+    };
+    ws.onmessage = function (e) {
+      var d = JSON.parse(e.data);
+      if (d.type === "history") {
+        $("msgs").innerHTML = "";
+        if (!d.list.length) add("sys", "", "Пока тут тихо. Напиши первым!");
+        d.list.forEach(function (x) { add(x.name === myName ? "m me" : "m", x.name, x.text); });
+      } else if (d.type === "msg") {
+        add(d.name === myName ? "m me" : "m", d.name, d.text);
+      } else if (d.type === "users") {
+        $("users").textContent = "В комнате: " + d.list.join(", ");
+      } else if (d.type === "full") {
+        add("sys", "", "Комната переполнена.");
+      }
+    };
+    ws.onclose = function () {
+      add("sys", "", "Соединение потеряно, переподключаюсь…");
+      setTimeout(connect, 2000);
+    };
+  }
+
+  function start() {
+    var v = $("nick").value.trim();
+    if (!v) return;
+    myName = v;
+    try { localStorage.setItem("nick", v); } catch (e) {}
+    $("namebar").style.display = "none";
+    $("f").style.display = "flex";
+    connect();
+  }
+  $("join").onclick = start;
+  $("nick").onkeydown = function (e) { if (e.key === "Enter") start(); };
+
+  $("f").onsubmit = function (e) {
+    e.preventDefault();
+    var v = $("txt").value.trim();
+    if (!v || !ws || ws.readyState !== 1) return;
+    ws.send(JSON.stringify({ type: "msg", text: v }));
+    $("txt").value = "";
+  };
+
+  $("copy").onclick = function () {
+    var b = $("copy");
+    var ok = function () { b.textContent = "Скопировано ✓"; setTimeout(function () { b.textContent = "Скопировать ссылку"; }, 2000); };
+    if (navigator.clipboard) navigator.clipboard.writeText(location.href).then(ok);
+  };
+})();
+</script>
+</body>
+</html>
