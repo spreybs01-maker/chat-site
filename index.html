@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090a13">
+<title>ZADNEPROVSKII — Universe</title>
+<style>
+:root{--bg:#090a13;--panel:#111321;--panel2:#15182a;--line:rgba(197,185,255,.12);--muted:#8d91a8;--text:#f3f1ff;--purple:#a78bfa;--blue:#6ca8ff}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font:14px/1.5 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{overflow-x:hidden}button{font:inherit;color:inherit;cursor:pointer}
+.shell{min-height:100vh;display:grid;grid-template-columns:246px minmax(0,1fr) 286px}
+.sidebar{height:100vh;position:sticky;top:0;border-right:1px solid var(--line);padding:25px 17px;background:rgba(10,11,20,.94);display:flex;flex-direction:column;z-index:5}
+.brand{display:flex;align-items:center;gap:11px;padding:0 9px 28px}.brand-mark{width:35px;height:35px;border-radius:12px;background:radial-gradient(circle at 30% 25%,#e8ddff,#8d67e8 42%,#37245e 78%);box-shadow:0 0 30px #8c66e844}.brand-name{font-size:12px;font-weight:800;letter-spacing:.17em}.brand-sub{font-size:10px;color:var(--muted);letter-spacing:.08em}
+.section-label{font-size:10px;letter-spacing:.17em;color:#676d86;padding:15px 10px 8px;text-transform:uppercase}
+.nav{display:grid;gap:5px}.nav button{border:1px solid transparent;background:transparent;color:#a9acc0;text-align:left;border-radius:11px;padding:11px 12px;display:flex;align-items:center;gap:12px;transition:.2s}.nav button:hover{background:#ffffff0a;color:white}.nav button.active{background:linear-gradient(100deg,#8d69e52a,#8d69e50a);border-color:#a98bfa35;color:#e8ddff}.ico{width:20px;text-align:center;color:#b79cff;font-size:17px}.sidebar-bottom{margin-top:auto}.profile{display:flex;gap:10px;align-items:center;padding:13px 9px;border-top:1px solid var(--line)}.avatar{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#c4a8ff,#6845ad);color:white;font-weight:700}.profile small{display:block;color:var(--mut);font-size:11px}
+main{min-width:0;padding:27px clamp(20px,3.2vw,48px) 55px;max-width:1500px;width:100%;margin:auto}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:29px}.crumb{color:var(--muted);font-size:12px}.crumb b{color:#e8e5f6;font-weight:600}.top-actions{display:flex;gap:9px}.icon-btn{width:38px;height:38px;border:1px solid var(--line);background:#ffffff06;border-radius:11px;color:#c6c1d9}
+.eyebrow{font-size:10px;letter-spacing:.2em;color:#b59aff;text-transform:uppercase;font-weight:700;margin:0 0 10px}.heading-row{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:23px}h1{font-size:clamp(27px,3vw,39px);letter-spacing:-.045em;line-height:1.08;margin:0 0 9px}.lead{margin:0;color:#a5a7ba;font-size:14px}.date{color:#8589a1;font-size:12px;white-space:nowrap}
+.universe{height:365px;position:relative;overflow:hidden;border:1px solid #a68cff25;border-radius:20px;background:radial-gradient(ellipse at 50% 48%,#201642 0%,#111226 42%,#090b16 100%);box-shadow:0 18px 65px #0005;margin-bottom:17px}
+.universe:before{content:"";position:absolute;inset:0;background-image:radial-gradient(1px 1px at 12% 20%,#fff 98%,transparent),radial-gradient(1px 1px at 35% 72%,#cbb8ff 98%,transparent),radial-gradient(1px 1px at 70% 19%,#fff 98%,transparent),radial-gradient(1px 1px at 86% 65%,#cbb8ff 98%,transparent);background-size:180px 150px;opacity:.7}
+.universe-head{position:absolute;z-index:2;left:22px;top:19px}.universe-head b{font-size:12px}.universe-head small{display:block;color:#a89cc8;font-size:10px}
+.stats{display:flex;gap:8px;margin-top:13px}.stat{padding:8px 10px;border:1px solid #ffffff12;background:#0d1023b8;border-radius:9px;min-width:80px}.stat span{display:block;color:#858aa8;font-size:9px}.stat strong{font-size:16px}
+.constellation{position:absolute;inset:0;width:100%;height:100%}.planet{filter:drop-shadow(0 0 9px #6d9fff)}.planet circle:first-child{fill:#3d8fff;stroke:#a6d3ff;stroke-width:1.3}.planet circle:last-child{fill:#c5e1ff}
+.legend{position:absolute;bottom:18px;left:22px;color:#8288a4;font-size:10px;display:flex;gap:14px}.legend span:before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:#8b7aff;margin-right:6px}
+.zone-tag{position:absolute;right:24px;bottom:20px;border:1px solid #9b83ff38;border-radius:20px;padding:6px 10px;color:#c6b7ff;background:#5e43a51c;font-size:10px}
+.quick-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:29px}
+.module{min-height:112px;text-align:left;padding:17px 18px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(145deg,#171a30,#121425);transition:.2s;position:relative;overflow:hidden}.module:hover{transform:translateY(-2px);border-color:#a88bfa66;background:linear-gradient(145deg,#20213b,#15172a)}.module .module-ico{font-size:20px;color:#b69aff;margin-bottom:11px}.module b{display:block;font-size:14px;margin-bottom:3px}.module small{color:#9296ad;font-size:11px}.module .arrow{position:absolute;right:17px;top:17px;color:#6e7188}
+.section-title{display:flex;justify-content:space-between;align-items:center;margin:0 0 13px}.section-title h2{font-size:16px;margin:0;letter-spacing:-.02em}.section-title a{font-size:11px;color:#b8a2ff;text-decoration:none}
+.bottom-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:13px}.panel{border:1px solid var(--line);border-radius:15px;background:#111321;padding:17px}.panel h3{font-size:12px;margin:0 0 13px}.activity{display:grid;gap:13px}.activity-item{display:flex;gap:10px;align-items:center}.activity-dot{width:8px;height:8px;border-radius:50%;background:#9b7aff;box-shadow:0 0 12px #9b7aff88}.activity-item b{font-size:11px;font-weight:600}.activity-item small{display:block;color:#858aa2;font-size:10px}
+.progress{height:5px;border-radius:10px;background:#ffffff12;overflow:hidden;margin-top:12px}.progress i{display:block;width:68%;height:100%;background:linear-gradient(90deg,#8062d8,#76a7ff);border-radius:10px}
+.rightbar{border-left:1px solid var(--line);padding:27px 18px;background:#0b0c16;min-height:100vh}.right-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:26px}.right-head b{font-size:12px}.online{font-size:10px;color:#7bd7b0}.online:before{content:"";display:inline-block;width:6px;height:6px;background:#6bd5a6;border-radius:50%;margin-right:6px}
+.right-panel{border-bottom:1px solid var(--line);padding:0 0 22px;margin-bottom:22px}.right-panel h3{font-size:11px;margin:0 0 14px;color:#c9c6da}.mini-user{display:flex;align-items:center;gap:9px;margin:12px 0}.mini-user .avatar{width:29px;height:29px;font-size:10px}.mini-user b{font-size:10px}.mini-user small{display:block;color:#858aa0;font-size:9px}.pill{font-size:9px;padding:3px 7px;border-radius:20px;background:#6c55aa2b;color:#bba7ff;margin-left:auto}
+.event{display:flex;gap:10px;margin:13px 0}.event-date{width:34px;height:37px;border-radius:8px;background:#171a2d;display:grid;place-items:center;color:#b9a2ff;font-size:10px;font-weight:700}.event b{font-size:10px;display:block}.event small{font-size:9px;color:#858aa0}
+.note{font-size:10px;color:#8c91a9;line-height:1.7}.note strong{color:#c7b6ff;font-weight:600}
+.toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#24203b;border:1px solid #b39aff44;padding:10px 16px;border-radius:12px;color:#eee8ff;box-shadow:0 10px 35px #0008;transition:.25s;z-index:20}.toast.show{opacity:1;transform:translate(-50%,0)}
+.mobile-menu{display:none}
+@media(max-width:1100px){.shell{grid-template-columns:220px minmax(0,1fr)}.rightbar{display:none}}
+@media(max-width:700px){.shell{display:block}.sidebar{position:fixed;left:0;top:0;bottom:0;width:250px;transform:translateX(-105%);transition:.25s;box-shadow:20px 0 70px #0009}.sidebar.open{transform:translateX(0)}main{padding:20px 15px 38px}.mobile-menu{display:inline-grid}.heading-row{align-items:start;flex-direction:column}.date{display:none}.universe{height:300px}.universe-head{left:13px;top:13px}.stats{gap:5px}.stat{min-width:62px;padding:6px}.stat strong{font-size:13px}.quick-grid{gap:9px}.module{min-height:105px;padding:14px}.bottom-grid{grid-template-columns:1fr}.topbar{margin-bottom:22px}}
+@media(max-width:390px){.quick-grid{grid-template-columns:1fr}.universe{height:270px}}
+</style>
+</head>
+<body>
+<div class="shell">
+<aside class="sidebar" id="sidebar">
+  <div class="brand"><div class="brand-mark"></div><div><div class="brand-name">ZADNEPROVSKII</div><div class="brand-sub">ONE ACCOUNT. ONE UNIVERSE.</div></div></div>
+  <div class="section-label">Workspace</div>
+  <nav class="nav" id="nav">
+    <button class="active" data-name="Universe"><span class="ico">✧</span> Universe</button>
+    <button data-name="Messenger"><span class="ico">▢</span> Messenger</button>
+    <button data-name="AI Assistant"><span class="ico">⌘</span> AI Assistant</button>
+    <button data-name="Community"><span class="ico">◎</span> Community</button>
+    <button data-name="Notes"><span class="ico">▤</span> Notes</button>
+  </nav>
+  <div class="section-label">Personal</div>
+  <nav class="nav">
+    <button data-name="Saved"><span class="ico">♧</span> Saved</button>
+    <button data-name="Profile"><span class="ico">◉</span> Profile</button>
+    <button data-name="Settings"><span class="ico">⚙</span> Settings</button>
+  </nav>
+  <div class="sidebar-bottom"><div class="section-label">Your account</div><div class="profile"><div class="avatar">F</div><div><b>Explorer</b><small>Personal workspace</small></div></div></div>
+</aside>
+<main>
+  <div class="topbar"><div class="crumb"><button class="icon-btn mobile-menu" id="menu">☰</button> &nbsp; Workspace / <b id="crumb">Universe</b></div><div class="top-actions"><button class="icon-btn" id="search" title="Search">⌕</button><button class="icon-btn" id="notifications" title="Notifications">♧</button><button class="icon-btn" id="language" title="Language">EN</button></div></div>
+  <div class="heading-row"><div><p class="eyebrow">YOUR DIGITAL ENVIRONMENT</p><h1 id="page-title">Welcome to your universe.</h1><p class="lead" id="page-lead">A digital space for communication, ideas, knowledge and creation.</p></div><div class="date">PERSONAL SPACE&nbsp; · &nbsp;PREVIEW</div></div>
+  <section class="universe">
+    <div class="universe-head"><b>Knowledge Universe</b><small>Solar System · Live preview</small><div class="stats"><div class="stat"><span>✧ Total bodies</span><strong>26</strong></div><div class="stat"><span>⌘ Constellations</span><strong>1</strong></div><div class="stat"><span>ϟ High impact</span><strong>08</strong></div></div></div>
+    <svg class="constellation" viewBox="0 0 900 365" preserveAspectRatio="xMidYMid meet" aria-label="Abstract constellation visualization">
+      <defs><linearGradient id="line" x1="0" x2="1"><stop stop-color="#557fff" stop-opacity=".1"/><stop offset=".5" stop-color="#a78bfa" stop-opacity=".9"/><stop offset="1" stop-color="#5b9cff" stop-opacity=".25"/></linearGradient><radialGradient id="glow"><stop stop-color="#9ecaff" stop-opacity=".8"/><stop offset="1" stop-color="#478cff" stop-opacity="0"/></radialGradient></defs>
+      <g stroke="url(#line)" stroke-width="1.5" fill="none"><path d="M280 190 L360 112 L505 180 L620 115 L745 130 L730 250 L510 205 L420 85 L280 190"/><path d="M360 112 L505 180 L620 115 L745 130"/><path d="M505 180 L530 240 L730 250"/><path d="M280 190 L505 180 L420 85"/></g>
+      <circle cx="530" cy="240" r="100" fill="none" stroke="#8870df" stroke-opacity=".13"/><circle cx="530" cy="240" r="84" fill="none" stroke="#8870df" stroke-opacity=".10"/>
+      <g class="planet"><circle cx="280" cy="190" r="10"/><circle cx="280" cy="190" r="3"/><circle cx="360" cy="112" r="9"/><circle cx="360" cy="112" r="3"/><circle cx="505" cy="180" r="11"/><circle cx="505" cy="180" r="3"/><circle cx="620" cy="115" r="8"/><circle cx="620" cy="115" r="3"/><circle cx="745" cy="130" r="7"/><circle cx="745" cy="130" r="2.5"/><circle cx="730" cy="250" r="9"/><circle cx="730" cy="250" r="3"/><circle cx="530" cy="240" r="13"/><circle cx="530" cy="240" r="4"/><circle cx="420" cy="85" r="8"/><circle cx="420" cy="85" r="2.5"/></g>
+    </svg>
+    <div class="legend"><span>Knowledge</span><span>Connections</span><span>Discoveries</span></div><div class="zone-tag">✦ &nbsp; YOUR KNOWLEDGE ZONE</div>
+  </section>
+  <div class="quick-grid">
+    <button class="module" data-name="Messenger"><div class="module-ico">▢</div><b>Messenger</b><small>Communication & private rooms</small><span class="arrow">↗</span></button>
+    <button class="module" data-name="AI Assistant"><div class="module-ico">⌘</div><b>AI Assistant</b><small>Your personal intelligence space</small><span class="arrow">↗</span></button>
+    <button class="module" data-name="Community"><div class="module-ico">◎</div><b>Community</b><small>Publications, people & discussions</small><span class="arrow">↗</span></button>
+    <button class="module" data-name="Notes"><div class="module-ico">▤</div><b>Notes</b><small>Personal notes, thoughts & ideas</small><span class="arrow">↗</span></button>
+    <button class="module" data-name="Saved"><div class="module-ico">♧</div><b>Saved</b><small>Your library of important things</small><span class="arrow">↗</span></button>
+    <button class="module" data-name="Profile"><div class="module-ico">◉</div><b>Profile</b><small>Your identity across the universe</small><span class="arrow">↗</span></button>
+  </div>
+  <div class="section-title"><h2>Overview</h2><a href="#" id="view-all">VIEW ALL&nbsp; ↗</a></div>
+  <div class="bottom-grid">
+    <section class="panel"><h3>Recent activity</h3><div class="activity"><div class="activity-item"><i class="activity-dot"></i><div><b>Universe workspace created</b><small>Your personal environment is ready to explore</small></div></div><div class="activity-item"><i class="activity-dot" style="background:#69b8ff"></i><div><b>Messenger module connected</b><small>Existing chat experience · preview</small></div></div><div class="activity-item"><i class="activity-dot" style="background:#d08dff"></i><div><b>New modules are taking shape</b><small>AI, Community, Notes and more</small></div></div></div></section>
+    <section class="panel"><h3>Universe progress</h3><div style="display:flex;justify-content:space-between;font-size:11px"><span style="color:#a2a5ba">Environment setup</span><b>68%</b></div><div class="progress"><i></i></div><p class="note">This is a visual prototype. Modules will become connected services as we build them.</p></section>
+  </div>
+</main>
+<aside class="rightbar">
+  <div class="right-head"><b>Context panel</b><span class="online">SYSTEM ONLINE</span></div>
+  <section class="right-panel"><h3>YOUR SPACE</h3><p class="note">One account. One universe.<br>Everything you need to think, communicate and create — in one environment.</p></section>
+  <section class="right-panel"><h3>QUICK ACCESS</h3>
+    <div class="mini-user"><div class="avatar">M</div><div><b>Messenger</b><small>Room-based communication</small></div><span class="pill">READY</span></div>
+    <div class="mini-user"><div class="avatar" style="background:linear-gradient(145deg,#7ecaff,#465cae)">AI</div><div><b>AI Assistant</b><small>Personal intelligence</small></div><span class="pill">SOON</span></div>
+    <div class="mini-user"><div class="avatar" style="background:linear-gradient(145deg,#e2a8ff,#8750b4)">C</div><div><b>Community</b><small>Ideas & discussions</small></div><span class="pill">SOON</span></div>
+  </section>
+  <section class="right-panel"><h3>UP NEXT</h3>
+    <div class="event"><div class="event-date">01</div><div><b>Unified account</b><small>One identity for all modules</small></div></div>
+    <div class="event"><div class="event-date">02</div><div><b>Personal dashboard</b><small>Customizable workspace</small></div></div>
+    <div class="event"><div class="event-date">03</div><div><b>Connected services</b><small>Modules working together</small></div></div>
+  </section>
+  <p class="note"><strong>PREVIEW BUILD 0.1</strong><br>Interface concept · November 2026</p>
+</aside>
+</div>
+<div class="toast" id="toast">This module is a visual preview for now.</div>
+<script>
+const toast=document.getElementById('toast');
+let timer;
+function notify(message='This module is a visual preview for now.'){toast.textContent=message;toast.classList.add('show');clearTimeout(timer);timer=setTimeout(()=>toast.classList.remove('show'),2300)}
+const titles={
+ 'Universe':['Welcome to your universe.','A digital space for communication, ideas, knowledge and creation.'],
+ 'Messenger':['Your conversations, in one place.','Private rooms and simple communication. The existing chat will be connected here.'],
+ 'AI Assistant':['Intelligence, within reach.','A dedicated space for questions, research, learning and creation.'],
+ 'Community':['Ideas grow when they are shared.','A place for publications, discussions and people with shared interests.'],
+ 'Notes':['A home for your thoughts.','Capture ideas, organize knowledge and build your personal library.'],
+ 'Saved':['Everything worth keeping.','A personal collection of important links, messages and discoveries.'],
+ 'Profile':['Your identity in this universe.','One profile that connects your spaces and preferences.'],
+ 'Settings':['Make this space yours.','Preferences and controls will live here.']
+};
+function openModule(name){document.getElementById('crumb').textContent=name;document.getElementById('page-title').textContent=titles[name]?.[0]||name;document.getElementById('page-lead').textContent=titles[name]?.[1]||'Your workspace';document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.name===name));if(name!=='Universe')notify(name+' — visual preview. Functionality will be connected later.');document.getElementById('sidebar').classList.remove('open')}
+document.querySelectorAll('[data-name]').forEach(b=>b.addEventListener('click',()=>openModule(b.dataset.name)));
+document.getElementById('menu').addEventListener('click',()=>document.getElementById('sidebar').classList.toggle('open'));
+document.getElementById('search').addEventListener('click',()=>notify('Search will be added in a later stage.'));
+document.getElementById('notifications').addEventListener('click',()=>notify('You are all caught up.'));
+document.getElementById('language').addEventListener('click',()=>notify('English interface preview.'));
+document.getElementById('view-all').addEventListener('click',e=>{e.preventDefault();notify('More modules are coming soon.')});
+</script>
+</body></html>
