@@ -145,6 +145,181 @@ body:has(#home.on) #home { display:block; min-height:100vh; }
 }
 html { scroll-behavior:smooth; }
 
+
+/* DARK MINIMAL COSMIC — chat room */
+body:has(#room.on) {
+  --bg:#080914; --text:#f5f3ff; --mut:#a6a2b8;
+  --line:rgba(213,203,255,.13); --soft:rgba(255,255,255,.075);
+  background:#080914; color:var(--text); overflow:hidden;
+}
+body:has(#room.on) .app {
+  width:100%; max-width:760px; height:100dvh; min-height:0;
+  margin:0 auto; position:relative; isolation:isolate;
+  background:
+    radial-gradient(ellipse at 50% -15%,rgba(103,73,174,.24),transparent 55%),
+    radial-gradient(ellipse at 100% 80%,rgba(63,44,116,.12),transparent 45%),
+    #080914;
+  box-shadow:0 0 100px rgba(0,0,0,.28);
+}
+body:has(#room.on) .app:before {
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:-1; opacity:.42;
+  background-image:
+    radial-gradient(1px 1px at 8% 17%,#fff 98%,transparent),
+    radial-gradient(1px 1px at 24% 71%,#c8b7ff 98%,transparent),
+    radial-gradient(1px 1px at 43% 29%,#fff 98%,transparent),
+    radial-gradient(1px 1px at 67% 13%,#d9ceff 98%,transparent),
+    radial-gradient(1px 1px at 83% 62%,#fff 98%,transparent),
+    radial-gradient(1px 1px at 92% 32%,#c8b7ff 98%,transparent);
+  background-size:290px 260px;
+  animation: cosmic-drift 38s linear infinite;
+}
+@keyframes cosmic-drift { from{transform:translateY(0)} to{transform:translateY(-260px)} }
+body:has(#room.on) header {
+  min-height:68px; padding:10px 14px;
+  border-bottom:1px solid var(--line);
+  background:rgba(9,10,25,.68); backdrop-filter:blur(18px);
+}
+body:has(#room.on) header b { color:#f7f4ff; letter-spacing:.015em; }
+body:has(#room.on) header small { color:#aaa4c2; }
+body:has(#room.on) svg { stroke:#e6ddff; }
+body:has(#room.on) .ic { color:#e6ddff; }
+body:has(#room.on) .ic:hover { background:rgba(255,255,255,.09); }
+body:has(#room.on) .pill {
+  color:#e9e2ff; border-color:rgba(218,204,255,.25);
+  background:rgba(255,255,255,.055);
+}
+body:has(#room.on) .pill:hover { background:rgba(255,255,255,.12); }
+body:has(#room.on) #msgs {
+  padding:22px clamp(14px,4vw,28px); gap:11px;
+  scrollbar-color:rgba(173,146,255,.28) transparent;
+}
+body:has(#room.on) .m {
+  max-width:min(78%,520px); padding:11px 15px;
+  color:#eeeaff; background:rgba(255,255,255,.075);
+  border:1px solid rgba(255,255,255,.055);
+  border-radius:18px 18px 18px 5px;
+  box-shadow:0 8px 26px rgba(0,0,0,.09);
+  animation: message-in .28s ease-out both;
+}
+body:has(#room.on) .m.me {
+  align-self:flex-end; color:#fff;
+  background:linear-gradient(135deg,rgba(111,78,190,.72),rgba(74,57,132,.78));
+  border:1px solid rgba(205,183,255,.2);
+  border-radius:18px 18px 5px 18px;
+}
+body:has(#room.on) .m small { color:#c2b7df; }
+body:has(#room.on) .m img {
+  max-width:min(300px,100%); max-height:360px; object-fit:cover;
+  border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,.22);
+}
+body:has(#room.on) .sys {
+  color:#aaa2c4; padding:7px 13px; border-radius:999px;
+  background:rgba(255,255,255,.045); font-size:13px;
+}
+@keyframes message-in {
+  from { opacity:0; transform:translateY(8px) scale(.985); }
+  to { opacity:1; transform:translateY(0) scale(1); }
+}
+body:has(#room.on) .bar {
+  padding:13px 14px calc(13px + env(safe-area-inset-bottom));
+  border-top:1px solid var(--line);
+  background:rgba(9,10,25,.76); backdrop-filter:blur(18px);
+}
+body:has(#room.on) .bar input[type=text] {
+  color:#f5f1ff; background:rgba(255,255,255,.07);
+  border:1px solid rgba(214,199,255,.16); border-radius:16px;
+  padding:13px 16px;
+}
+body:has(#room.on) .bar input::placeholder { color:#918aa9; }
+body:has(#room.on) .bar .ic { border:1px solid rgba(214,199,255,.12); }
+body:has(#room.on) .bar .btn {
+  color:#fff; background:linear-gradient(135deg,#8d6be0,#6545b7);
+  border-radius:14px; box-shadow:0 5px 22px rgba(103,70,183,.24);
+}
+body:has(#room.on) .copied {
+  color:#f1ebff; background:#201a36; border:1px solid var(--line);
+  border-radius:10px; padding:7px 10px;
+}
+body:has(#room.on) #lb {
+  background:rgba(4,5,14,.96); backdrop-filter:blur(18px);
+}
+body:has(#room.on) #lb img { box-shadow:0 20px 70px rgba(0,0,0,.5); }
+
+/* Welcome scene */
+.room-splash {
+  position:absolute; inset:0; z-index:30; display:grid; place-items:center;
+  overflow:hidden; padding:30px 24px;
+  background:
+    radial-gradient(ellipse at 50% 40%,rgba(92,66,159,.28),transparent 42%),
+    radial-gradient(ellipse at 50% 100%,rgba(39,27,79,.32),transparent 55%),
+    #070812;
+  transition:opacity .7s ease, visibility .7s ease;
+}
+.room-splash.is-leaving { opacity:0; visibility:hidden; pointer-events:none; }
+.splash-stars {
+  position:absolute; inset:-20%; opacity:.65; pointer-events:none;
+  background-image:
+    radial-gradient(1px 1px at 10% 20%,#fff 98%,transparent),
+    radial-gradient(1px 1px at 30% 65%,#c9b7ff 98%,transparent),
+    radial-gradient(1px 1px at 52% 18%,#fff 98%,transparent),
+    radial-gradient(1px 1px at 75% 42%,#d9ceff 98%,transparent),
+    radial-gradient(1px 1px at 90% 78%,#fff 98%,transparent);
+  background-size:250px 220px;
+  animation:splash-drift 55s linear infinite;
+}
+@keyframes splash-drift { from{transform:translate3d(0,0,0)} to{transform:translate3d(-35px,-80px,0)} }
+.splash-content {
+  position:relative; z-index:1; width:min(520px,100%); text-align:center;
+  display:flex; flex-direction:column; align-items:center;
+  animation:splash-arrive .9s cubic-bezier(.2,.7,.2,1) both;
+}
+@keyframes splash-arrive {
+  from{opacity:0;transform:translateY(16px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.splash-mark {
+  width:68px; height:68px; border:1px solid rgba(202,181,255,.45);
+  border-radius:50%; display:grid; place-items:center; margin-bottom:30px;
+  box-shadow:0 0 55px rgba(142,105,230,.22),inset 0 0 25px rgba(142,105,230,.12);
+}
+.splash-mark span {
+  width:22px; height:22px; border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#fff,#b99aff 40%,#7049c6 75%);
+  box-shadow:0 0 28px rgba(180,148,255,.8);
+}
+.splash-kicker { margin:0 0 18px; color:#b9a8e8; font-size:10px; font-weight:700; letter-spacing:.25em; }
+.splash-kicker span { padding:0 5px; color:#76639f; }
+.splash-content h1 {
+  margin:0; color:#f7f3ff; font-size:clamp(30px,6vw,46px);
+  line-height:1.08; letter-spacing:-.045em; font-weight:650;
+}
+.splash-copy { margin:18px 0 0; color:#d9d1ed; font-size:17px; }
+.splash-note {
+  max-width:420px; margin:10px 0 28px; color:#9690ad;
+  font-size:14px; line-height:1.75;
+}
+.splash-enter {
+  border:1px solid rgba(218,201,255,.35); border-radius:999px;
+  color:#fff; background:rgba(150,117,225,.17); padding:14px 23px;
+  font-weight:600; box-shadow:0 8px 35px rgba(104,75,177,.16);
+  transition:background .2s ease,transform .2s ease,border-color .2s ease;
+}
+.splash-enter:hover { background:rgba(150,117,225,.28); border-color:rgba(218,201,255,.6); transform:translateY(-2px); }
+.splash-enter span { margin-left:10px; color:#d9caff; }
+.splash-room-id { margin-top:30px; color:#69627f; font-size:10px; letter-spacing:.2em; text-transform:uppercase; }
+@media(max-width:520px) {
+  body:has(#room.on) .app { width:100%; }
+  body:has(#room.on) header { padding-inline:8px; }
+  body:has(#room.on) header .pill { padding:7px 10px; }
+  body:has(#room.on) .m { max-width:88%; }
+  .splash-note { font-size:13px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  body:has(#room.on) .app:before, .splash-stars { animation:none; }
+  body:has(#room.on) .m, .splash-content { animation:none; }
+  .room-splash { transition:none; }
+}
+
 </style>
 </head>
 <body>
@@ -235,6 +410,18 @@ html { scroll-behavior:smooth; }
 </section>
 
   <section class="screen" id="room">
+    <div class="room-splash" id="room-splash" aria-labelledby="splash-title">
+      <div class="splash-stars" aria-hidden="true"></div>
+      <div class="splash-content">
+        <div class="splash-mark" aria-hidden="true"><span></span></div>
+        <p class="splash-kicker">ZADNEPROVSKII <span>·</span> YOUR SPACE</p>
+        <h1 id="splash-title" data-splash-title>Пространство для общения</h1>
+        <p class="splash-copy" data-splash-copy>Это ваше пространство для разговоров.</p>
+        <p class="splash-note" data-splash-note>Скопируйте ссылку, пригласите друга и начните общение. Здесь вы можете обмениваться сообщениями и фотографиями.</p>
+        <button class="splash-enter" id="splash-enter" type="button">Войти в комнату <span aria-hidden="true">→</span></button>
+        <div class="splash-room-id" id="splash-room-id"></div>
+      </div>
+    </div>
     <header>
       <button class="ic" id="home-btn" data-aria="back"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
       <div class="t"><b id="title"></b><small id="users"></small></div>
@@ -297,7 +484,9 @@ html { scroll-behavior:smooth; }
       room: "Комната", inRoom: "В комнате: ", copied: "Ссылка скопирована", name: "Твое имя", join: "Войти",
       msg: "Сообщение", quiet: "Пока тут тихо. Напиши первым!", lost: "Соединение потеряно, переподключаюсь…",
       full: "Комната переполнена.", imgFail: "Не удалось отправить фото. Попробуй другое.",
-      back: "Назад", copy: "Скопировать ссылку", attach: "Прикрепить фото", send: "Отправить", close: "Закрыть"
+      back: "Назад", copy: "Скопировать ссылку", attach: "Прикрепить фото", send: "Отправить", close: "Закрыть",
+      splashTitle: "Пространство для общения", splashCopy: "Это ваше пространство для разговоров.",
+      splashNote: "Скопируйте ссылку, пригласите друга и начните общение. Здесь вы можете обмениваться сообщениями и фотографиями.", splashEnter: "Войти в комнату"
     },
     en: {
       more: "Learn more", h1: "Your private chat with family and friends", sub: "Share the link!",
@@ -324,7 +513,9 @@ html { scroll-behavior:smooth; }
       room: "Room", inRoom: "In the room: ", copied: "Link copied", name: "Your name", join: "Join",
       msg: "Message", quiet: "It is quiet here. Write first!", lost: "Connection lost, reconnecting…",
       full: "The room is full.", imgFail: "Could not send the photo. Try another one.",
-      back: "Back", copy: "Copy link", attach: "Attach photo", send: "Send", close: "Close"
+      back: "Back", copy: "Copy link", attach: "Attach photo", send: "Send", close: "Close",
+      splashTitle: "A space for conversation", splashCopy: "This is your space to talk.",
+      splashNote: "Copy the link, invite a friend, and start talking. You can exchange messages and photos here.", splashEnter: "Enter the room"
     }
   };
   var lang = "en";
@@ -346,6 +537,10 @@ html { scroll-behavior:smooth; }
       b.innerHTML = lang === "ru" ? "<b>RU</b> <span>/ EN</span>" : "<span>RU /</span> <b>EN</b>";
     });
     if (roomId) {
+      $("splash-title").textContent = t("splashTitle");
+      $("splash-copy").textContent = t("splashCopy");
+      $("splash-note").textContent = t("splashNote");
+      $("splash-enter").innerHTML = t("splashEnter") + " <span aria-hidden=\"true\">→</span>";
       $("title").textContent = t("room") + " " + roomId;
       $("users").textContent = lastUsers.length ? t("inRoom") + lastUsers.join(", ") : "";
     }
@@ -385,6 +580,17 @@ html { scroll-behavior:smooth; }
   }
 
   $("room").classList.add("on");
+  $("splash-room-id").textContent = "ROOM  /  " + roomId.toUpperCase();
+  var splashTimer = null;
+  function leaveSplash() {
+    var splash = $("room-splash");
+    if (!splash || splash.classList.contains("is-leaving")) return;
+    splash.classList.add("is-leaving");
+    if (splashTimer) clearTimeout(splashTimer);
+    setTimeout(function () { splash.style.display = "none"; }, 750);
+  }
+  $("splash-enter").onclick = leaveSplash;
+  splashTimer = setTimeout(leaveSplash, 5200);
   $("home-btn").onclick = function () { location.href = "/"; };
   if (myName) $("nick").value = myName;
 
@@ -481,7 +687,7 @@ html { scroll-behavior:smooth; }
       x.drawImage(img, 0, 0, c.width, c.height);
       URL.revokeObjectURL(url);
       var data = c.toDataURL("image/jpeg", 0.78);
-      if (data.length > 1900000) { add("sys", "", t("imgFail")); return; }
+      if (data.length > 1900000 || !ws || ws.readyState !== 1) { add("sys", "", t("imgFail")); return; }
       ws.send(JSON.stringify({ type: "img", data: data }));
     };
     img.onerror = function () { URL.revokeObjectURL(url); add("sys", "", t("imgFail")); };
